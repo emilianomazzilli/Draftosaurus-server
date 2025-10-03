@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar sesión - Draftosaurus</title>
+  <link rel="stylesheet" href="../Css/styles.css">
+  <link rel="stylesheet" href="../Css/form.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="titulo">Iniciar sesión</h1>
+
+    <!-- el form ahora apunta al procesador -->
+    <form class="formulario" action="../Php/process_login.php" method="post">
+      <label for="usuario">Usuario o Email</label>
+      <input type="text" id="usuario" name="usuario" required autocomplete="username">
+      <label for="contrasena">Contraseña</label>
+      <div class="password-wrapper">
+        <input type="password" id="contrasena" name="contrasena" required autocomplete="current-password">
+        <button type="button" class="ojo" onclick="togglePassword('contrasena', this)">👁️</button>
+      </div>
+      <button type="submit" class="btn aceptar">Aceptar</button>
+    </form>
+  </div>
+
+  <script>
+    // Muestra errores pasados por ?error= en la URL
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const err = params.get('error');
+      if (err) {
+        const div = document.createElement('div');
+        div.style = 'background:#fdd;border:1px solid #f99;padding:10px;border-radius:6px;margin:12px auto;max-width:360px;color:#900;text-align:center;';
+        div.textContent = decodeURIComponent(err);
+        const container = document.querySelector('.container');
+        container.insertBefore(div, container.querySelector('.formulario'));
+      }
+    })();
+
+    function togglePassword(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input.type === "password") {
+        input.type = "text";
+        btn.textContent = "🙈";
+      } else {
+        input.type = "password";
+        btn.textContent = "👁️";
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,459 @@
+.game-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.other-boards {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 18px;
+}
+
+.player-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 200px;
+}
+
+.player-table-bar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 170px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.player-table-img.shadow-table {
+  width: 170px;
+  height: 38px;
+  object-fit: contain;
+  border-radius: 8px;
+  filter: drop-shadow(0 6px 12px rgba(34, 34, 34, 0.35));
+  box-shadow: none;
+  position: relative;
+  z-index: 1;
+}
+
+.player-name.on-table {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #f9c15b;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 6px #222;
+  z-index: 2;
+  width: 150px;
+  pointer-events: none;
+}
+
+.board-bg {
+  background: url('../img/madera.png') center center no-repeat;
+  background-size: cover;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px #2222;
+  width: 180px;
+  height: 120px;
+  position: relative;
+  z-index: 1;
+  border: 4px solid #d97a2b;
+  margin-top: 24px;
+}
+
+.other-board {
+  width: 160px;
+  height: 100px;
+  border-radius: 12px;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+.player-dino-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.player-dino-img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 3px solid #d97a2b;
+  background: #fff;
+  box-shadow: 0 2px 8px #2223;
+}
+
+.main-board-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.main-board-label {
+  background: url('../img/tabla.png') no-repeat center center;
+  background-size: 100% 100%;
+  color: #f9c15b;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 10px 0 6px 0;
+  letter-spacing: 1px;
+  border-radius: 10px;
+  width: 260px;
+  box-shadow: none;
+}
+
+.main-board-bg {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-board {
+  width: 600px; /* Ajusta el tamaño a gusto */
+  height: auto;
+  display: block;
+}
+
+#tablero-casillas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 400px;
+  pointer-events: none; /* Se activa en JS para dropear */
+}
+
+.dino-table-section {
+  margin-top: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.dino-table {
+  background: url('../img/tabla.png') no-repeat center center;
+  background-size: 100% 100%;
+  border-radius: 12px;
+  width: 420px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.dino {
+  width: 48px;
+  height: 48px;
+  margin: 0 6px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  box-shadow: 0 1px 4px #2222;
+  border: 2px solid #d97a2b;
+}
+
+.dice-btn {
+  position: absolute;
+  top: -38px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: url('../img/tabla.png') no-repeat center center;
+  background-size: 100% 100%;
+  border: none;
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 2.2rem;
+  color: #fff;
+  transition: transform 0.1s;
+  box-shadow: none;
+  z-index: 10;
+}
+
+.dice-btn:active {
+  transform: translateX(-50%) translateY(-2px) scale(1.04);
+}
+
+.timer-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 420px;
+  margin-top: 6px;
+  gap: 8px;
+}
+
+.timer-label {
+  background: url('../img/tabla.png') no-repeat center center;
+  background-size: 100% 100%;
+  color: #222;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 8px 22px 8px 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.timer-label::before {
+  content: "⏰";
+  position: absolute;
+  left: 14px;
+  font-size: 1.3rem;
+}
+
+.timer-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-left: 6px;
+  color: #222;
+}
+
+.puntaje-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.puntaje-modal {
+  background: url('../img/pergamino.png') no-repeat center center, #fff;
+  background-size: 100% 100%;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px #2228;
+  padding: 32px 24px 24px 24px;
+  min-width: 280px;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  border: 6px solid #d97a2b; /* borde naranja */
+}
+
+.puntaje-header {
+  color: #d97a2b;
+  font-size: 1.5rem;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.puntaje-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+  width: 100%;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+}
+
+.puntaje-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  margin-bottom: 6px;
+  padding: 8px 12px;
+  box-shadow: 0 1px 6px #2222;
+}
+
+.puntaje-icon {
+  font-size: 1.4rem;
+  margin-right: 8px;
+}
+
+.puntaje-puntos {
+  color: #1976d2;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.puntaje-pos {
+  color: #d97a2b;
+  font-weight: bold;
+  margin-left: 12px;
+}
+
+.puntaje-mensaje {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  padding: 12px 10px;
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 6px #2222;
+}
+
+.puntaje-modal .btn.aceptar {
+  width: 100%;
+  height: 50px;
+  font-size: 1.1rem;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .game-container {
+    max-width: 98vw;
+    padding-top: 8px;
+  }
+
+  .other-boards {
+    gap: 10px;
+  }
+
+  .player-board {
+    width: 110px;
+  }
+
+  .player-table-bar,
+  .player-table-img {
+    width: 90px;
+    height: 22px;
+  }
+
+  .player-name {
+    font-size: 0.8rem;
+    width: 90px;
+    top: -14px;
+  }
+
+  .board-bg {
+    width: 90px;
+    height: 60px;
+    padding: 4px;
+  }
+
+  .other-board {
+    width: 70px;
+    height: 40px;
+  }
+
+  .player-dino-img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .main-board-label {
+    font-size: 1rem;
+    width: 98vw;
+    padding: 4px 0 2px 0;
+  }
+
+  .main-board {
+    width: 98vw;
+    height: 160px;
+  }
+
+  .main-board-bg {
+    padding: 4px;
+  }
+
+  .dino-table {
+    width: 98vw;
+    height: 38px;
+  }
+
+  .dino {
+    width: 24px;
+    height: 24px;
+    font-size: 1.2rem;
+  }
+
+  .dice-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+    top: -18px;
+  }
+
+  .timer-section {
+    width: 98vw;
+  }
+
+  .timer-label {
+    font-size: 1rem;
+    padding: 4px 10px 4px 28px;
+  }
+
+  .timer-label::before {
+    left: 4px;
+    font-size: 1rem;
+  }
+
+  .timer-value {
+    font-size: 1rem;
+  }
+}
+
+.casilla {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px dashed #b8864b;
+  background: rgba(255,255,255,0.15);
+  pointer-events: auto;
+  transition: background 0.2s;
+}
+.casilla.over {
+  background: #ffe08288;
+  border-color: #d97a2b;
+}

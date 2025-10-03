@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menú - Draftosaurus</title>
+  <link rel="stylesheet" href="../Css/styles.css">
+  <link rel="stylesheet" href="../Css/menu.css">
+</head>
+<body>
+  <!-- Botón de perfil -->
+  <button id="perfil-btn" class="perfil-btn" title="Perfil">
+    <img src="../img/perfil.png" alt="Perfil" class="perfil-icon">
+  </button>
+  <!-- Botón de opciones -->
+  <button id="opciones-btn" class="opciones-btn" title="Opciones">
+    <svg class="opciones-icon" width="40" height="40" viewBox="0 0 24 24" fill="#b8864b">
+      <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7zm7.43-2.88l1.77-1.02a.5.5 0 0 0 .18-.68l-1.68-2.91a.5.5 0 0 0-.61-.23l-2.08.83a7.03 7.03 0 0 0-1.61-.93l-.32-2.21a.5.5 0 0 0-.5-.42h-3.36a.5.5 0 0 0-.5.42l-.32 2.21c-.57.22-1.11.52-1.61.93l-2.08-.83a.5.5 0 0 0-.61.23l-1.68 2.91a.5.5 0 0 0 .18.68l1.77 1.02c-.04.32-.07.65-.07.98s.03.66.07.98l-1.77 1.02a.5.5 0 0 0-.18.68l1.68 2.91a.5.5 0 0 0 .61.23l2.08-.83c.5.41 1.04.71 1.61.93l.32 2.21a.5.5 0 0 0 .5.42h3.36a.5.5 0 0 0 .5-.42l.32-2.21c.57-.22 1.11-.52 1.61-.93l2.08.83a.5.5 0 0 0 .61-.23l1.68-2.91a.5.5 0 0 0-.18-.68l-1.77-1.02c.04-.32.07-.65.07-.98s-.03-.66-.07-.98z"/>
+    </svg>
+  </button>
+  <div class="container menu">
+    <img src="../img/logodraftosaurus.png" alt="Draftosaurus Logo" class="logo-menu">
+    <div class="menu-botones">
+      <a href="servers.html" class="btn menu-btn">Buscar partida</a>
+      <a href="crear.html" class="btn menu-btn">Crear partida</a>
+      <a href="herramienta.html" class="btn menu-btn">Modo herramienta</a>
+      <a href="instrucciones.html" class="btn menu-btn">Cómo jugar</a>
+    </div>
+  </div>
+
+  <!-- Overlay de perfil -->
+  <div id="perfil-overlay" class="perfil-overlay" style="display:none;">
+    <div class="perfil-modal-wrapper">
+      <div class="perfil-tabla-titulo">
+        <img src="../img/tabla.png" alt="Tabla" class="perfil-titulo-img">
+        <span id="perfil-nombre-titulo" class="perfil-nombre-titulo">Cargando...</span>
+      </div>
+      <div class="perfil-modal">
+        <span class="close-perfil" onclick="cerrarPerfilOverlay()">×</span>
+        <div class="perfil-foto-section">
+          <img id="perfil-foto" src="../img/perfil.png" alt="Foto de perfil" class="perfil-foto">
+          <form id="perfil-foto-form" enctype="multipart/form-data">
+            <input type="file" id="foto-input" accept="image/*">
+            <button type="button" onclick="cambiarFotoPerfil()">Cambiar foto</button>
+          </form>
+        </div>
+        <div class="perfil-nombre-section">
+          <b>Nombre:</b> <span id="perfil-nombre">Cargando...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay de opciones -->
+  <div id="opciones-overlay" class="opciones-overlay" style="display:none;">
+    <div class="opciones-modal-wrapper">
+      <div class="opciones-tabla-titulo">
+        <img src="../img/tabla.png" alt="Tabla" class="opciones-titulo-img">
+        <span class="opciones-nombre-titulo">Opciones</span>
+      </div>
+      <div class="opciones-modal">
+        <span class="close-opciones" onclick="cerrarOpcionesOverlay()">×</span>
+        <div class="opciones-contenido">
+          <div class="opcion-control">
+            <label for="sonido-range"><b>Sonido</b></label>
+            <input type="range" id="sonido-range" min="0" max="100" value="50" oninput="actualizarSonido(this.value)">
+            <span id="sonido-valor">50</span>%
+          </div>
+          <div class="opcion-control">
+            <label for="musica-range"><b>Música</b></label>
+            <input type="range" id="musica-range" min="0" max="100" value="50" oninput="actualizarMusica(this.value)">
+            <span id="musica-valor">50</span>%
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mostrar overlay
+    document.getElementById('perfil-btn').onclick = function() {
+      document.getElementById('perfil-overlay').style.display = 'flex';
+      cargarPerfil();
+    };
+    function cerrarPerfilOverlay() {
+      document.getElementById('perfil-overlay').style.display = 'none';
+    }
+
+    // Cargar nombre de usuario desde PHP
+    function cargarPerfil() {
+      fetch('../Php/get_user.php')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('perfil-nombre').textContent = data.nombre || 'Usuario';
+          document.getElementById('perfil-nombre-titulo').textContent = data.nombre || 'Usuario';
+          if (data.foto) {
+            document.getElementById('perfil-foto').src = data.foto;
+            document.querySelector('.perfil-icon').src = data.foto;
+          }
+        });
+    }
+
+    // Cambiar foto localmente
+    function cambiarFotoPerfil() {
+      const input = document.getElementById('foto-input');
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('perfil-foto').src = e.target.result;
+          document.querySelector('.perfil-icon').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+        // Opcional: enviar la foto al servidor con AJAX si quieres guardarla
+        // let formData = new FormData();
+        // formData.append('foto', input.files[0]);
+        // fetch('../Php/update_foto.php', { method: 'POST', body: formData });
+      }
+    }
+
+    // Opciones overlay
+    document.getElementById('opciones-btn').onclick = function() {
+      document.getElementById('opciones-overlay').style.display = 'flex';
+    };
+    function cerrarOpcionesOverlay() {
+      document.getElementById('opciones-overlay').style.display = 'none';
+    }
+
+    // Sonido y música interactivas
+    function actualizarSonido(val) {
+      document.getElementById('sonido-valor').textContent = val;
+      // Aquí puedes agregar lógica para cambiar el volumen de efectos de sonido
+      // Ejemplo: window.sonidoVolumen = val / 100;
+    }
+    function actualizarMusica(val) {
+      document.getElementById('musica-valor').textContent = val;
+      // Aquí puedes agregar lógica para cambiar el volumen de la música
+      // Ejemplo: window.musicaVolumen = val / 100;
+    }
+  </script>
+</body>
+</html>

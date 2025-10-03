@@ -1,0 +1,193 @@
+/* Importa la fuente Orbit desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbit:wght@400;700&display=swap');
+
+/* Fondo para todas las páginas */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-width: 100vw;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  background: url('../img/fondo.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Contenedor principal */
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.titulo {
+  margin-top: 80px;
+  font-size: 3rem;
+  color: #fff;
+  text-shadow: 2px 2px 8px #333;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+  /* Mantiene la fuente original para Draftosaurus */
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+
+/* Botones inferiores de index */
+.bottom-buttons {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
+}
+
+/* Botones personalizados con imagen de fondo */
+.btn {
+  background: url('../img/tabla.png') no-repeat center center;
+  background-size: 100% 100%;
+  /* La imagen cubre todo el botón */
+  color: #fff;
+  border: none;
+  width: 220px;
+  height: 70px;
+  font-size: 1.15rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.1s;
+  font-weight: bold;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  padding: 0;
+  /* Elimina el drop shadow */
+  box-shadow: none;
+}
+
+.btn:hover {
+  /* Elimina el drop shadow */
+  box-shadow: none;
+}
+
+.btn:active {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: none;
+}
+
+/* Formularios */
+.formulario {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  padding: 32px 24px 24px 24px;
+  min-width: 260px;
+  max-width: 340px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.formulario label {
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.formulario input {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  background: #fff;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+}
+
+.formulario .btn.aceptar {
+  margin-top: 12px;
+  width: 100%;
+  height: 50px;
+  font-size: 1.1rem;
+  background-size: 100% 100%;
+}
+
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ojo {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  margin-left: -30px;
+  transition: color 0.2s;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+}
+
+.ojo:active {
+  color: #1976d2;
+}
+
+/* Menú principal */
+.menu {
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.menu-botones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  margin-top: 90px;
+}
+
+.menu-btn {
+  width: 220px;
+  height: 70px;
+  padding: 0;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+  .titulo {
+    font-size: 2rem;
+    margin-top: 40px;
+  }
+
+  .formulario {
+    min-width: 180px;
+    padding: 18px 8px 14px 8px;
+    max-width: 95vw;
+  }
+
+  .btn,
+  .menu-btn {
+    padding: 0;
+    font-size: 1rem;
+    width: 160px;
+    height: 50px;
+  }
+
+  .bottom-buttons {
+    gap: 10px;
+    bottom: 30px;
+  }
+
+  .menu-botones {
+    margin-top: 40px;
+    gap: 14px;
+  }
+}

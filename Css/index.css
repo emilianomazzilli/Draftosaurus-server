@@ -1,0 +1,16 @@
+.logo-draftosaurus {
+  display: block;
+  margin: 80px auto 40px auto;
+  max-width: 500px;
+  width: 80vw;
+  height: auto;
+}
+
+.bottom-buttons {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
+}

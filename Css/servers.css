@@ -1,0 +1,167 @@
+.servers-container {
+  max-width: 700px;           /* antes 400px */
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.10); /* un poco más visible */
+  border-radius: 24px;        /* antes 18px */
+  padding: 48px 36px 36px 36px; /* antes 24px 18px 18px 18px */
+  box-shadow: 0 4px 24px #2223; /* más sombra */
+  position: relative;
+  margin-top: 80px;           /* menos margen arriba */
+}
+
+.servers-header {
+  background: url('../img/tabla.png') no-repeat center center;
+  background-size: 100% 100%;
+  color: #f9c15b;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+  font-size: 2.6rem;          /* antes 2rem */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 32px;        /* antes 18px */
+  padding: 28px 0 18px 0;     /* antes 18px 0 12px 0 */
+  letter-spacing: 2px;
+  box-shadow: none;
+  border-radius: 16px;        /* antes 10px */
+}
+
+.server-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 18px;                  /* agrega espacio entre items */
+  display: flex;
+  flex-direction: column;
+}
+
+.server-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 18px;        /* antes 12px */
+  margin-bottom: 0;           /* gap lo maneja */
+  padding: 18px 24px;         /* antes 10px 12px */
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+  font-size: 1.25rem;         /* antes 1.05rem */
+  box-shadow: 0 2px 12px #2222;
+}
+
+.server-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.server-icon {
+  width: 54px;                /* antes 36px */
+  height: 54px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;          /* antes 1.5rem */
+  margin-right: 4px;
+}
+
+.server-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;                   /* antes 2px */
+}
+
+.server-name {
+  font-weight: bold;
+  color: #d97a2b;
+  font-size: 1.2rem;          /* antes normal */
+}
+
+.server-meta {
+  font-size: 1.05rem;         /* antes 0.95rem */
+  color: #333;
+}
+
+.join-btn {
+  background: url('../img/tabla.png') no-repeat center center;
+  background-size: 100% 100%;
+  color: #fff;
+  border: none;
+  width: 90px;                /* antes 60px */
+  height: 48px;               /* antes 36px */
+  font-size: 1.3rem;          /* antes 1rem */
+  cursor: pointer;
+  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s;
+  box-shadow: none;
+  border-radius: 12px;        /* antes 8px */
+  padding: 0;
+}
+
+.join-btn:active {
+  transform: translateY(-2px) scale(1.04);
+}
+
+.back-btn {
+  position: absolute;
+  top: 36px;                  /* antes 24px */
+  left: 36px;                 /* antes 24px */
+  background: url('../img/tabla.png') no-repeat center center;
+  background-size: 100% 100%;
+  border: none;
+  width: 60px;                /* antes 48px */
+  height: 60px;
+  border-radius: 12px;        /* antes 8px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 2.4rem;          /* antes 2rem */
+  color: #fff;
+  transition: transform 0.1s;
+  box-shadow: none;
+  z-index: 10;
+}
+
+.back-btn:active {
+  transform: translateY(-2px) scale(1.04);
+}
+
+@media (max-width: 900px) {
+  .servers-container {
+    max-width: 98vw;
+    padding: 18px 2vw 18px 2vw;
+    margin-top: 40px;
+  }
+  .servers-header {
+    font-size: 1.6rem;
+    padding: 12px 0 8px 0;
+  }
+  .server-item {
+    font-size: 1rem;
+    padding: 10px 6px;
+    border-radius: 12px;
+  }
+  .server-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+  .join-btn {
+    width: 48px;
+    height: 32px;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+  .back-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+    top: 10px;
+    left: 10px;
+    border-radius: 8px;
+  }
+}
