@@ -46,23 +46,67 @@
   background-size: 100% 100%;
 }
 
-.password-wrapper {
+a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, var(--color-madera), var(--color-titulo));
+  transform: scaleX(0);
+  transform-origin: center;
+  /* clave para el centrado */
+  transition: transform 0.4s ease-in-out;
+}
+
+a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, var(--color-madera), var(--color-titulo));
+  transform: scaleX(0);
+  transform-origin: center; /* clave para el centrado */
+  transition: transform 0.4s ease-in-out;
+}
+
+/* Hover: botón + línea */
+.button a:hover {
+  filter: brightness(92%);
+  transform: translateY(2px); /* efecto de apretado */
+}
+
+.button a:hover::before {
+  transform: scaleX(1); /* línea aparece desde el centro */
+}
+
+/* Barra de fuerza de contraseña */
+.strength-bar {
+  height: 5px;
+  width: 0;
+  background: #ff4d4d;
+  border-radius: 5px;
+  margin-top: 5px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* El texto que aparece debajo */
+#strengthText {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+
+}
+
+.password-require {
+  color: #fff;
   display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.ojo {
-  background: none;
-  border: none;
-  font-size: 1.3rem;
-  cursor: pointer;
-  padding: 2px 6px;
-  margin-left: -30px;
-  transition: color 0.2s;
-  font-family: 'Opal Orbit', Arial, Helvetica, sans-serif;
-}
-
-.ojo:active {
-  color: #1976d2;
+  flex-direction: column;
+  font-size: 0.85rem;
+  justify-content: center;
+  padding: 0;
+  margin: 0 15px;
 }

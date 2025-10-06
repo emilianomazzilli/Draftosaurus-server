@@ -38,7 +38,35 @@
   font-family: "Agbalumo", system-ui;
   text-decoration: none;
   text-transform: uppercase;
-  text-shadow: #000000;
+  text-shadow: 1px 1px 2px black, 0 0 25px #D58516, 0 0 5px black;
   font-size: 1.3rem;
   font-weight: 700;
+  margin: 0 auto;
+  position: relative; /* Necesario para la línea */
+  padding-bottom: 5px;
+  transition: filter 0.2s, transform 0.2s; /* animaciones suaves */
+}
+
+/* Línea animada */
+.bottom-buttons a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, var(--color-madera), var(--color-titulo));
+  transform: scaleX(0);
+  transform-origin: center; /* clave para el centrado */
+  transition: transform 0.4s ease-in-out;
+}
+
+/* Hover: botón + línea */
+.bottom-buttons a:hover {
+  filter: brightness(92%);
+  transform: translateY(2px); /* efecto de apretado */
+}
+
+.bottom-buttons a:hover::before {
+  transform: scaleX(1); /* línea aparece desde el centro */
 }
