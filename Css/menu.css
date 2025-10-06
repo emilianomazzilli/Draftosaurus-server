@@ -1,3 +1,14 @@
+:root {
+  --blanco: #ffffff;
+  --negro-sombra: rgba(0, 0, 0, 0.7);
+  --color-madera: #753416;
+  --color-titulo: #e3ab45;
+  --color-subtitulo: #f7e9b8;
+  --textura-madera: url("img/efecto-madera.png");
+  --titulo-fuente: "Rubik Distressed", system-ui;
+  --titulo-texto: 'Arial', sans-serif;
+}
+
 .menu {
   justify-content: flex-start;
   align-items: center;
@@ -15,15 +26,19 @@
 .logo-menu {
   display: block;
   margin: 0 auto 30px auto;
-  max-width: 500px; /* achicado */
+  max-width: 500px;
+  /* achicado */
   height: auto;
 }
 
 .menu-btn {
   width: 100%;
-  max-width: 420px; /* más ancho */
-  height: 80px;    /* más alto */
-  font-size: 1.5rem;  /* texto más grande */
+  max-width: 420px;
+  /* más ancho */
+  height: 80px;
+  /* más alto */
+  font-size: 1.5rem;
+  /* texto más grande */
   font-weight: bold;
 }
 
@@ -39,6 +54,7 @@
   font-size: 2.5rem;
   margin-bottom: 20px;
 }
+
 .titulo span {
   color: #1976d2;
 }
@@ -52,25 +68,34 @@
   cursor: pointer;
   z-index: 100;
 }
+
 .perfil-icon {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   box-shadow: 0 2px 8px #0002;
 }
+
 .perfil-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex; align-items: center; justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 999;
 }
+
 .perfil-modal-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .perfil-tabla-titulo {
   position: absolute;
   top: -38px;
@@ -83,6 +108,7 @@
   justify-content: center;
   z-index: 2;
 }
+
 .perfil-titulo-img {
   position: absolute;
   left: 0;
@@ -91,6 +117,7 @@
   height: 54px;
   z-index: 1;
 }
+
 .perfil-nombre-titulo {
   position: absolute;
   left: 0;
@@ -107,6 +134,7 @@
   z-index: 2;
   pointer-events: none;
 }
+
 .perfil-modal {
   background: url('../img/pergamino.png') center/cover no-repeat;
   padding: 2rem 1.5rem 1.5rem 1.5rem;
@@ -114,9 +142,11 @@
   min-width: 320px;
   position: relative;
   text-align: center;
-  border: 12px solid #b8864b; /* color madera */
+  border: 12px solid #b8864b;
+  /* color madera */
   box-shadow: 0 0 32px #0005;
-  margin-top: 38px; /* espacio para la tabla */
+  margin-top: 38px;
+  /* espacio para la tabla */
 }
 
 .perfil-titulo-bar {
@@ -143,7 +173,8 @@
 
 .close-perfil {
   position: absolute;
-  top: 10px; right: 15px;
+  top: 10px;
+  right: 15px;
   font-size: 2rem;
   cursor: pointer;
   color: #6d4c1b;
@@ -156,7 +187,8 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
-  border: 2px solid #b8864b; /* color madera */
+  border: 2px solid #b8864b;
+  /* color madera */
   box-shadow: 0 2px 8px #0002;
 }
 
@@ -173,6 +205,7 @@
   cursor: pointer;
   z-index: 100;
 }
+
 .opciones-icon {
   width: 40px;
   height: 40px;
@@ -182,11 +215,17 @@
 
 .opciones-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex; align-items: center; justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 999;
 }
+
 .opciones-modal-wrapper {
   position: relative;
   display: flex;
@@ -240,10 +279,13 @@
   min-width: 320px;
   position: relative;
   text-align: center;
-  border: 12px solid #b8864b; /* color madera */
+  border: 12px solid #b8864b;
+  /* color madera */
   box-shadow: 0 0 32px #0005;
-  margin-top: 38px; /* espacio para la tabla */
+  margin-top: 38px;
+  /* espacio para la tabla */
 }
+
 .opciones-titulo-bar {
   position: relative;
   display: flex;
@@ -251,10 +293,12 @@
   justify-content: center;
   margin-bottom: 1.2rem;
 }
+
 .opciones-titulo-img {
   height: 54px;
   margin-right: 12px;
 }
+
 .opciones-nombre-titulo {
   font-size: 1.7rem;
   font-weight: bold;
@@ -263,17 +307,21 @@
   position: relative;
   top: 2px;
 }
+
 .close-opciones {
   position: absolute;
-  top: 10px; right: 15px;
+  top: 10px;
+  right: 15px;
   font-size: 2rem;
   cursor: pointer;
   color: #6d4c1b;
   text-shadow: 0 1px 0 #fff7;
 }
+
 .opciones-contenido {
   margin-top: 1.5rem;
 }
+
 .opcion-control {
   margin-bottom: 1.5rem;
   text-align: left;
@@ -283,9 +331,11 @@
   font-size: 1.1rem;
   justify-content: center;
 }
+
 .opcion-control label {
   min-width: 80px;
 }
+
 .opcion-control input[type="range"] {
   width: 120px;
   accent-color: #b8864b;

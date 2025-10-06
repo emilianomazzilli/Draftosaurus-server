@@ -1,3 +1,21 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --blanco: #ffffff;
+  --negro-sombra: rgba(0, 0, 0, 0.7);
+  --color-madera: #753416;
+  --color-titulo: #e3ab45;
+  --color-secundario: #D58516;
+  --color-subtitulo: #f7e9b8;
+  --textura-madera: url("img/efecto-madera.png");
+  --titulo-fuente: "Rubik Distressed", system-ui;
+  --titulo-texto: 'Arial', sans-serif;
+}
+
 .logo-draftosaurus {
   display: block;
   margin: 80px auto 40px auto;
@@ -13,4 +31,14 @@
   transform: translateX(-50%);
   display: flex;
   gap: 30px;
+}
+
+.bottom-buttons a {
+  color: var(--color-secundario);
+  font-family: "Agbalumo", system-ui;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: #000000;
+  font-size: 1.3rem;
+  font-weight: 700;
 }
