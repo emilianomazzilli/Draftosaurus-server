@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbit:wght@400;700&display=swap');
+
+/* =========================
+   Variables / Design Tokens
+   ========================= */
+:root {
+  --blanco: #ffffff;
+  --negro: #000000;
+  --error-mensaje: #d51414;
+  --negro-sombra: rgba(0, 0, 0, .7);
+  --bg-glass: rgba(0, 0, 0, .4);
+
+  --color-madera: #753416;
+  --color-titulo: #e3ab45;
+  --color-subtitulo: #f7e9b8;
+  --color-secundario: #222;
+  --accent: #D58516;
+
+  --textura-madera: url("img/efecto-madera.png");
+  --texto-fuente: 'Segoe UI', Arial, Helvetica, sans-serif;
+  --titulo-fuente: "Rubik Distressed", system-ui;
+  --titulo-texto: "Agbalumo", system-ui;
+
+  --radius-2xl: 16px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 10px;
+  --space-4: 14px;
+  --space-5: 18px;
+  --space-6: 24px;
+  --space-7: 32px;
+}
+
+/* =========
+   Globales
+   ========= */
+body {
+  margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    min-width: 100vw;
+    color: var(--accent);
+    background: url('../img/fondo.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: var(--titulo-texto);
+}
+
+.error-message {
+  color: var(--error-mensaje);
+  text-align: center;
+}
+
+.success-message {
+  background: #4caf50;
+  color: var(--blanco);
+  padding: var(--space-3);
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+/* ======================
+   Bordes decorativos
+   ====================== */
+.borde {
+  position: fixed;
+  z-index: 999;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.borde.top,
+.borde.bottom {
+  height: 15px;
+  left: 0;
+  right: 0;
+  background-image: url('../img/madera.png');
+}
+
+.borde.left,
+.borde.right {
+  top: 0;
+  bottom: 0;
+  width: 15px;
+  background-image: url('../img/maderav.png');
+  background-repeat: repeat-y;
+}
+
+.borde.top {
+  top: 0;
+}
+
+.borde.bottom {
+  bottom: 0;
+}
+
+.borde.left {
+  left: 0;
+}
+
+.borde.right {
+  right: 0;
+}
+
+/* ===================
+   Layout principal
+   =================== */
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.titulo {
+  margin: 80px 0 40px;
+  font-size: 3rem;
+  color: var(--blanco);
+  text-shadow: 2px 2px 8px #333;
+  letter-spacing: 2px;
+  font-family: var(--texto-fuente);
+}
+
+/* ===================
+   Botones
+   =================== */
+.bottom-buttons {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
+}
+
+.btn {
+  background: url('../img/tabla.png') center/100% 100% no-repeat;
+  color: var(--color-secundario);
+  font-family: var(--titulo-texto), system-ui;
+  border: 0;
+  width: 220px;
+  height: 70px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  transition: transform .1s;
+}
+
+.btn:active {
+  transform: translateY(-4px) scale(1.04);
+}
+
+.menu-btn {
+  width: 220px;
+  height: 70px;
+  font-size: 1.1rem;
+}
+
+/* ===========
+   Formularios
+   =========== */
+.formulario {
+  background: var(--bg-glass);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-7) var(--space-6) var(--space-6);
+  min-width: 260px;
+  max-width: 340px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.formulario label {
+  color: var(--blanco);
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.formulario input {
+  padding: var(--space-2) var(--space-3);
+  border-radius: 8px;
+  border: 0;
+  margin-bottom: var(--space-2);
+  background: var(--blanco);
+  font-size: 1rem;
+  font-family: var(--titulo-texto), system-ui;
+}
+
+.formulario .btn.aceptar {
+  margin-top: 12px;
+  width: 100%;
+  height: 50px;
+  font-size: 1.1rem;
+}
+
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
