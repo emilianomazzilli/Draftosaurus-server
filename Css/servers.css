@@ -1,0 +1,170 @@
+/* contenedor centrado en pantalla con fondo pergamino */
+.servers-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 40px); /* deja sitio para bordes */
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.servers-container {
+  width: min(760px, 92vw);
+  background-image: url("../img/pergamino.png");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  padding: 56px 28px 28px;
+  border-radius: 16px;
+  border: 4px solid #b8864b;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  display: block;
+  position: relative;
+  padding-top: 110px; /* deja espacio para el overlay */
+}
+
+/* header simple y centrado */
+.servers-header {
+  text-align: center;
+  font-family: "agbalumo", system-ui;
+  font-size: 2.2rem;
+  color: var(--accent, #f9c15b);
+  margin: 0 0 18px;
+  letter-spacing: 1.5px;
+}
+
+/* nuevo overlay con la tabla PNG y el texto */
+.servers-title-overlay {
+  position: absolute;
+  top: -36px;                 /* sube la tabla por encima del pergamino */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  width: calc(100% + 48px);   /* más ancha que el contenedor */
+  max-width: 920px;           /* límite razonable en pantallas grandes */
+  height: 120px;              /* más alta para que destaque */
+  background: url("../img/tabla.png") center/contain no-repeat;
+  background-size: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  font-family: "agbalumo", system-ui;
+  font-size: 2.4rem;          /* tamaño del texto más grande */
+  color: var(--accent, #f9c15b);
+  letter-spacing: 2px;
+  font-weight: 800;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.6);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.45); /* resalta sobre el fondo */
+}
+
+/* dejar espacio en el contenedor para que la overlay no tape la lista */
+.servers-container {
+  padding-top: 160px; /* aumentar para que la lista quede debajo de la tabla sobresaliente */
+}
+
+/* lista vertical compacta */
+.server-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+/* cada fila: todo en una línea, nombre/meta a la izquierda, botón a la derecha */
+.server-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(0,0,0,0.18);
+  border-radius: 10px;
+  min-height: 64px;
+}
+
+/* izquierda: icon + texto en línea */
+.server-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.server-icon {
+  font-size: 1.6rem;
+  width: 44px;
+  text-align: center;
+}
+
+.server-name {
+  font-weight: 700;
+  color: var(--accent, #D58516);
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.server-meta {
+  display: inline-block;
+  margin-left: 8px;
+  font-weight: 400;
+  color: #fff;
+  opacity: .85;
+  font-size: .95rem;
+}
+
+/* acción a la derecha */
+.server-action {
+  width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+/* botón de unirse: usa la madera */
+.join-btn.small {
+  width: 54px;
+  height: 54px;
+  border: none;
+  background: url("../img/botonchico.png") center/cover no-repeat;
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* filas bloqueadas */
+.server-row.locked {
+  opacity: 0.95;
+  cursor: not-allowed;
+}
+.server-row.locked .join-btn.small {
+  filter: grayscale(1) opacity(.6);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* candado estático (antes del nombre) */
+.lock-static { margin-right: 6px; }
+
+/* candado hover a la derecha */
+.lock-hover {
+  display: none;
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+.server-row.locked:hover .lock-hover { display: inline-block; }
+
+/* ajustes responsivos */
+@media (max-width: 520px) {
+  .servers-container { padding: 42px 14px 20px; }
+  .server-name { font-size: .95rem; }
+  .server-meta { display: none; } /* simplifica en móvil */
+}
