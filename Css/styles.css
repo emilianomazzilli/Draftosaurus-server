@@ -41,8 +41,6 @@
     box-sizing: border-box;
 }
 body {
-  margin: 0;
-  padding: 0;
   min-height: 100vh;
   min-width: 100vw;
   background: var(--bg-image) center;
@@ -130,12 +128,6 @@ body {
   text-shadow: 1px 1px 2px #000, 0 0 25px var(--color-secundario), 0 0 5px #000;
   letter-spacing: 2px;
 }
-    /* text-shadow: 1px 1px 2px #000, 0 0 25px var(--color-secundario), 0 0 5px #000;
-    text-decoration: none;
-    cursor: default;
-    display: flex
-;
-    align-items: center; */
 
 /* ===================
    Botones

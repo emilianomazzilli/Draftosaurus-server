@@ -655,9 +655,9 @@ const ZONES = [
   {
     id: 1,
     name: "Bosque de la Semejanza",
-    left: "5%",
+    left: "4%",
     top: "5%",
-    width: "33%",
+    width: "34%",
     height: "23%",
   },
   {
@@ -679,7 +679,7 @@ const ZONES = [
   {
     id: 4,
     name: "El Rey de la Selva",
-    left: "66%",
+    left: "69%",
     top: "9%",
     width: "15%",
     height: "13%",
@@ -703,10 +703,10 @@ const ZONES = [
   {
     id: 7,
     name: "El Rio",
-    left: "42%",
-    top: "72%",
-    width: "27%",
-    height: "28%",
+    left: "47%",
+    top: "80%",
+    width: "21%",
+    height: "%",
   },
 ];
 
@@ -786,11 +786,7 @@ function renderZones() {
 
     zoneEl.innerHTML = `
                     <div class="zone-label">${zone.name}</div>
-                    <div class="zone-count">Total: ${
-                      zones[zone.id].length
-                    }</div>
                     <div class="zone-dinos" data-zone="${zone.id}"></div>
-                    <div class="zone-summary" data-zone="${zone.id}"></div>
                 `;
 
     zoneEl.addEventListener("dragover", (e) => {
