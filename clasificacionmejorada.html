@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasificación Prehistórica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ======================
+   Bordes decorativos
+   ====================== */
+        .borde {
+            position: fixed;
+            z-index: 999;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .borde.top,
+        .borde.bottom {
+            height: 15px;
+            left: 0;
+            right: 0;
+            background-image: url('img/madera.png');
+        }
+
+        .borde.left,
+        .borde.right {
+            top: 0;
+            bottom: 0;
+            width: 15px;
+            background-image: url('img/maderav.png');
+            background-repeat: repeat-y;
+        }
+
+        .borde.top {
+            top: 0;
+        }
+
+        .borde.bottom {
+            bottom: 0;
+        }
+
+        .borde.left {
+            left: 0;
+        }
+
+        .borde.right {
+            right: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('img/fondo.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Hojas volando de fondo */
+        .leaves {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .leaf {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 15s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .main-title {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b35, #f7931e, #fdc500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #fdc500;
+            letter-spacing: 2px;
+        }
+
+        /* Tabs para Mensual/Anual */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 15px 40px;
+            border: 2px solid #ff6b35;
+            border-radius: 30px;
+            background: rgba(255, 107, 53, 0.1);
+            color: #ff6b35;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab:hover {
+            background: rgba(255, 107, 53, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #fff;
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.6);
+        }
+
+        /* Podio prehistórico */
+        .podium-section {
+            margin-bottom: 60px;
+        }
+
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 30px;
+            margin: 0 auto;
+            max-width: 900px;
+            flex-wrap: wrap;
+        }
+
+        .podium-place {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: floatUp 0.8s ease-out;
+        }
+
+        @keyframes floatUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .place-1 .avatar {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            border: 4px solid #ff8800;
+        }
+
+        .place-2 .avatar {
+            background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+            box-shadow: 0 0 30px rgba(192, 192, 192, 0.6);
+            border: 4px solid #808080;
+        }
+
+        .place-3 .avatar {
+            background: linear-gradient(135deg, #cd7f32, #e6a85c);
+            box-shadow: 0 0 30px rgba(205, 127, 50, 0.6);
+            border: 4px solid #8b4513;
+        }
+
+        .medal {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 35px;
+            height: 35px;
+            background: #ff6b35;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            border: 2px solid #fff;
+            z-index: 3;
+        }
+
+        .place-1 .medal {
+            background: #ffd700;
+            color: #000;
+        }
+
+        .place-2 .medal {
+            background: #c0c0c0;
+            color: #000;
+        }
+
+        .place-3 .medal {
+            background: #cd7f32;
+            color: #fff;
+        }
+
+        .pedestal {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.6), rgba(101, 67, 33, 0.6));
+            border: 2px solid rgba(255, 107, 53, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 180px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .place-1 .pedestal {
+            height: 200px;
+            border-color: #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .place-2 .pedestal {
+            height: 160px;
+            border-color: #c0c0c0;
+        }
+
+        .place-3 .pedestal {
+            height: 130px;
+            border-color: #cd7f32;
+        }
+
+        .player-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fdc500;
+        }
+
+        .player-score {
+            font-size: 28px;
+            font-weight: bold;
+            color: #90ee90;
+            text-shadow: 0 0 10px rgba(144, 238, 144, 0.5);
+        }
+
+        .player-level {
+            font-size: 14px;
+            color: #ffb347;
+            margin-top: 5px;
+        }
+
+        /* Tabla de clasificación */
+        .leaderboard {
+            background: rgba(44, 25, 12, 0.6);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .leaderboard-title {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #fdc500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .leaderboard-header {
+            display: grid;
+            grid-template-columns: 70px 70px 1fr 170px;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #fdc500;
+        }
+
+        .leaderboard-row {
+            display: grid;
+            grid-template-columns: 70px 70px 1fr 170px 100px;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(139, 69, 19, 0.3);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .leaderboard-row:hover {
+            background: rgba(255, 107, 53, 0.2);
+            border-color: rgba(255, 107, 53, 0.5);
+            transform: translateX(5px);
+        }
+
+        .rank {
+            font-size: 24px;
+            font-weight: bold;
+            color: #90ee90;
+        }
+
+        .player-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+            border: 2px solid rgba(255, 107, 53, 0.5);
+        }
+
+        .player-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .stats {
+            font-size: 14px;
+            color: #ffb347;
+        }
+
+        .score {
+            font-size: 22px;
+            font-weight: bold;
+            color: #90ee90;
+            text-align: right;
+        }
+
+
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+
+            .leaderboard-header,
+            .leaderboard-row {
+                grid-template-columns: 50px 70px 1fr 100px 80px;
+                gap: 10px;
+            }
+
+            .main-title {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .podium {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .podium-place {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .place-1 .pedestal,
+            .place-2 .pedestal,
+            .place-3 .pedestal {
+                height: 150px;
+            }
+
+            .leaderboard-header,
+            .leaderboard-row {
+                grid-template-columns: 40px 60px 1fr 90px;
+                gap: 8px;
+                font-size: 14px;
+            }
+
+
+
+            .main-title {
+                font-size: 28px;
+            }
+
+            .tab {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 10px;
+            }
+
+            .leaderboard {
+                padding: 20px 15px;
+            }
+
+            .leaderboard-header,
+            .leaderboard-row {
+                grid-template-columns: 35px 50px 1fr 80px;
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .player-avatar {
+                width: 45px;
+                height: 45px;
+                font-size: 24px;
+            }
+
+            .rank {
+                font-size: 18px;
+            }
+
+            .score {
+                font-size: 16px;
+            }
+
+            .avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 38px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Hojas cayendo -->
+    <div class="leaves" id="leaves"></div>
+
+    <div class="borde top"></div>
+    <div class="borde bottom"></div>
+    <div class="borde left"></div>
+    <div class="borde right"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">🦖 CLASIFICACIÓN PREHISTÓRICA</h1>
+            <p class="subtitle">Los mejores cazadores de la era jurásica</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('monthly')">📅 MENSUAL</div>
+            <div class="tab" onclick="switchTab('annual')">🏆 ANUAL</div>
+        </div>
+
+        <!-- Contenido Mensual -->
+        <div class="tab-content active" id="monthly">
+            <!-- Podio -->
+            <div class="podium-section">
+                <div class="podium">
+                    <div class="podium-place place-2">
+                        <div class="avatar">
+                            🦕
+                            <div class="medal">2</div>
+                        </div>
+                        <div class="pedestal">
+                            <div class="player-name">BrontoKing</div>
+                            <div class="player-score">8,450</div>
+                            <div class="player-level">Nivel 42</div>
+                        </div>
+                    </div>
+
+                    <div class="podium-place place-1">
+                        <div class="avatar">
+                            🦖
+                            <div class="medal">1</div>
+                        </div>
+                        <div class="pedestal">
+                            <div class="player-name">T-Rex_Pro</div>
+                            <div class="player-score">12,380</div>
+                            <div class="player-level">Nivel 58</div>
+                        </div>
+                    </div>
+
+                    <div class="podium-place place-3">
+                        <div class="avatar">
+                            🦎
+                            <div class="medal">3</div>
+                        </div>
+                        <div class="pedestal">
+                            <div class="player-name">RaptorQueen</div>
+                            <div class="player-score">7,920</div>
+                            <div class="player-level">Nivel 39</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla -->
+            <div class="leaderboard">
+                <h2 class="leaderboard-title">🌿 Top 10 de Octubre</h2>
+                <div class="leaderboard-header">
+                    <div>Rank</div>
+                    <div>Profile</div>
+                    <div>Jugador</div>
+                    <div>Puntos</div>
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">4°</div>
+                    <div class="player-avatar">🦖</div>
+                    <div class="player-info">
+                        <div class="name">Stego_Master</div>
+                        <div class="stats">Nivel 35 • 245 partidas</div>
+                    </div>
+                    <div class="score">6,840</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">5°</div>
+                    <div class="player-avatar">🦕</div>
+                    <div class="player-info">
+                        <div class="name">DinoHunter99</div>
+                        <div class="stats">Nivel 33 • 198 partidas</div>
+                    </div>
+                    <div class="score">6,120</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">6°</div>
+                    <div class="player-avatar">🦎</div>
+                    <div class="player-info">
+                        <div class="name">TriceraTop</div>
+                        <div class="stats">Nivel 31 • 180 partidas</div>
+                    </div>
+                    <div class="score">5,890</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">7°</div>
+                    <div class="player-avatar">🦖</div>
+                    <div class="player-info">
+                        <div class="name">VelociBoss</div>
+                        <div class="stats">Nivel 29 • 165 partidas</div>
+                    </div>
+                    <div class="score">5,340</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">8°</div>
+                    <div class="player-avatar">🦕</div>
+                    <div class="player-info">
+                        <div class="name">PteroDactyl_X</div>
+                        <div class="stats">Nivel 28 • 152 partidas</div>
+                    </div>
+                    <div class="score">5,100</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">9°</div>
+                    <div class="player-avatar">🦎</div>
+                    <div class="player-info">
+                        <div class="name">MegaRex_77</div>
+                        <div class="stats">Nivel 26 • 145 partidas</div>
+                    </div>
+                    <div class="score">4,860</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">10°</div>
+                    <div class="player-avatar">🦖</div>
+                    <div class="player-info">
+                        <div class="name">DiploDominator</div>
+                        <div class="stats">Nivel 25 • 138 partidas</div>
+                    </div>
+                    <div class="score">4,620</div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido Anual -->
+        <div class="tab-content" id="annual">
+            <!-- Podio -->
+            <div class="podium-section">
+                <div class="podium">
+                    <div class="podium-place place-2">
+                        <div class="avatar">
+                            🦎
+                            <div class="medal">2</div>
+                        </div>
+                        <div class="pedestal">
+                            <div class="player-name">RaptorQueen</div>
+                            <div class="player-score">98,750</div>
+                            <div class="player-level">Nivel 85</div>
+                        </div>
+                    </div>
+
+                    <div class="podium-place place-1">
+                        <div class="avatar">
+                            🦖
+                            <div class="medal">1</div>
+                        </div>
+                        <div class="pedestal">
+                            <div class="player-name">T-Rex_Pro</div>
+                            <div class="player-score">145,820</div>
+                            <div class="player-level">Nivel 99</div>
+                        </div>
+                    </div>
+
+                    <div class="podium-place place-3">
+                        <div class="avatar">
+                            🦕
+                            <div class="medal">3</div>
+                        </div>
+                        <div class="pedestal">
+                            <div class="player-name">DinoHunter99</div>
+                            <div class="player-score">87,340</div>
+                            <div class="player-level">Nivel 78</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla -->
+            <div class="leaderboard">
+                <h2 class="leaderboard-title">👑 Top 10 de 2025</h2>
+                <div class="leaderboard-header">
+                    <div>Rank</div>
+                    <div>Dino</div>
+                    <div>Jugador</div>
+                    <div>Puntos</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">4°</div>
+                    <div class="player-avatar">🦖</div>
+                    <div class="player-info">
+                        <div class="name">BrontoKing</div>
+                        <div class="stats">Nivel 72 • 2.8k partidas</div>
+                    </div>
+                    <div class="score">76,480</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">5°</div>
+                    <div class="player-avatar">🦕</div>
+                    <div class="player-info">
+                        <div class="name">Stego_Master</div>
+                        <div class="stats">Nivel 68 • 2.5k partidas</div>
+                    </div>
+                    <div class="score">68,920</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">6°</div>
+                    <div class="player-avatar">🦎</div>
+                    <div class="player-info">
+                        <div class="name">TriceraTop</div>
+                        <div class="stats">Nivel 65 • 2.3k partidas</div>
+                    </div>
+                    <div class="score">64,750</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">7°</div>
+                    <div class="player-avatar">🦖</div>
+                    <div class="player-info">
+                        <div class="name">PteroDactyl_X</div>
+                        <div class="stats">Nivel 62 • 2.1k partidas</div>
+                    </div>
+                    <div class="score">59,340</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">8°</div>
+                    <div class="player-avatar">🦕</div>
+                    <div class="player-info">
+                        <div class="name">VelociBoss</div>
+                        <div class="stats">Nivel 58 • 1.9k partidas</div>
+                    </div>
+                    <div class="score">54,820</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">9°</div>
+                    <div class="player-avatar">🦎</div>
+                    <div class="player-info">
+                        <div class="name">MegaRex_77</div>
+                        <div class="stats">Nivel 55 • 1.8k partidas</div>
+                    </div>
+                    <div class="score">51,960</div>
+
+                </div>
+                <div class="leaderboard-row">
+                    <div class="rank">10°</div>
+                    <div class="player-avatar">🦖</div>
+                    <div class="player-info">
+                        <div class="name">DiploDominator</div>
+                        <div class="stats">Nivel 52 • 1.7k partidas</div>
+                    </div>
+                    <div class="score">48,230</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generar hojas cayendo
+        const leavesContainer = document.getElementById('leaves');
+        const leafEmojis = ['🍃', '🍂', '🌿'];
+
+        for (let i = 0; i < 20; i++) {
+            const leaf = document.createElement('div');
+            leaf.className = 'leaf';
+            leaf.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+            leaf.style.left = Math.random() * 100 + '%';
+            leaf.style.animationDelay = Math.random() * 10 + 's';
+            leaf.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            leavesContainer.appendChild(leaf);
+        }
+
+        // Cambiar tabs
+        function switchTab(tab, ev) {
+            // Actualizar tabs (usando el event que se pasa desde el onclick)
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            const clicked = ev?.currentTarget || ev?.target;
+            if (clicked) clicked.classList.add('active');
+
+            // Actualizar contenido
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

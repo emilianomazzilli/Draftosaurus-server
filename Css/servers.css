@@ -1,0 +1,182 @@
+/* contenedor centrado en pantalla */
+.servers-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 40px);
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.servers-container {
+  width: min(680px, 92vw);
+  background-image: url("../img/pergamino.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  padding: 70px 20px 40px;
+  border-radius: 20px;
+  display: block;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* título con tabla de madera colgante */
+.servers-title-overlay {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  width: 420px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background-image: url("../img/madera.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  font-family: "agbalumo", system-ui;
+  font-size: 2.6rem;
+  color: #8B4513;
+  letter-spacing: 1px;
+  font-weight: 700;
+  text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.3),
+    -1px -1px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* lista vertical */
+.server-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0;
+}
+
+/* cada fila del servidor */
+.server-row {
+  display: grid;
+  grid-template-columns: 50px 100px 1fr 70px 60px;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background: transparent;
+  min-height: 70px;
+  position: relative;
+}
+
+/* separador decorativo entre filas */
+.server-row::after {
+  content: "🦶🦶🦶🦶🦶🦶🦶🦶🦶🦶🦶🦶🦶🦶🦶";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.server-row:last-child::after {
+  display: none;
+}
+
+/* emoji del servidor */
+.server-icon {
+  font-size: 2rem;
+  width: 50px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* nombre de la sala (Partida 01, etc) */
+.server-sala {
+  font-family: "agbalumo", system-ui;
+  font-weight: 700;
+  color: #D2691E;
+  font-size: 1.15rem;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* nombre del host - OCULTO como en la imagen */
+.server-host {
+  display: none;
+}
+
+/* número de jugadores */
+.server-players {
+  font-family: "agbalumo", system-ui;
+  font-weight: 700;
+  color: #8B4513;
+  font-size: 1.05rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* nombre del mapa - OCULTO */
+.server-map {
+  display: none;
+}
+
+/* acción a la derecha */
+.server-action {
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* botón de unirse */
+.join-btn.small {
+  width: 60px;
+  height: 60px;
+  border: none;
+  background: url("../img/botonchico.png") center/cover no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  filter: brightness(1);
+}
+
+.join-btn.small:hover:not(:disabled) {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+.join-btn.small:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* filas bloqueadas */
+.server-row.locked {
+  opacity: 0.75;
+}
+
+.server-row.locked .join-btn.small {
+  filter: grayscale(0.3) brightness(0.85);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* candado sobre el botón */
+.lock-overlay {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translate(50%, -50%);
+  font-size: 1.8rem;
+  pointer-events: none;
+  z-index: 10;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6));
+}
+

@@ -1,0 +1,22 @@
+<?php
+return [
+  'anterior' => 'Anterior',
+  'arrastra_dinosaurios_desde_la_lista_a_las_zonas_del_parque' => 'Arrastra dinosaurios desde la lista a las zonas del parque.',
+  'atajos_tiles' => 'Atajos útiles',
+  'bienvenido_al_modo_herramienta' => 'Bienvenido al Modo Herramienta',
+  'cerrar' => 'Cerrar',
+  'consulta_el_panel_de_puntaje_para_ver_resultados_por_zona' => 'Consulta el panel de puntaje para ver resultados por zona.',
+  'c_mo_usar_el_modo_herramienta' => 'Cómo usar el Modo Herramienta',
+  'informaci_n' => 'Información',
+  'iniciar_sesi_n_draftosaurus' => 'Iniciar sesión - Draftosaurus',
+  'mapa_del_parque' => 'Mapa del Parque',
+  'siguiente' => 'Siguiente',
+  'teclas_para_navegar_esc_para_cerrar_la_ventana' => 'Teclas: ← / → para navegar, Esc para cerrar la ventana.',
+  'usa_las_flechas_para_leer_m_s_consejos' => 'Usa las flechas para leer más consejos.',
+  'volver_al_men' => 'Volver al menú',
+  'para_maximizar_tu_puntaje_y_ganar_tu_partida_de_draftosaurus' => 'para maximizar tu puntaje y ganar tu partida de Draftosaurus!',
+  'tool_title' => 'tool-title',
+  'puntaje_por_zona' => '🏆 Puntaje por zona',
+  'inventario_global' => '📊 Inventario Global',
+  'disponibles' => '🦴 Disponibles',
+];

@@ -1,0 +1,367 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(to bottom, #4dd9d9 0%, #4dd9d9 60%, #8bc34a 60%, #8bc34a 100%);
+        }
+
+        /* Borde rojo */
+        .game-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 12px solid;
+            border-image: linear-gradient(to bottom, #c44a3a 0%, #8b3428 100%) 1;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Botón back */
+        .back-button {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d9754a 0%, #b95530 100%);
+            border: 4px solid #8b3a1a;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            z-index: 50;
+            transition: all 0.2s;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+        }
+
+        .back-button::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-right: 22px solid #fff;
+            border-top: 14px solid transparent;
+            border-bottom: 14px solid transparent;
+            margin-right: 4px;
+        }
+
+        /* Árboles */
+        .tree {
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tree-left {
+            left: 20px;
+            top: 120px;
+        }
+
+        .tree-right {
+            right: 20px;
+            top: 120px;
+        }
+
+        .tree-trunk {
+            width: 35px;
+            height: 90px;
+            background: linear-gradient(to right, #5a3a2a 0%, #7a4a3a 50%, #5a3a2a 100%);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .tree-foliage {
+            width: 160px;
+            height: 150px;
+            background: radial-gradient(circle at 40% 40%, #6bc24a 0%, #4a9c35 50%, #3a7c25 100%);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Nube */
+        .cloud {
+            position: absolute;
+            width: 200px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 30%, #fffed6 0%, #e8d4b8 100%);
+            border-radius: 50%;
+            top: 50px;
+            right: 180px;
+            z-index: 1;
+        }
+
+        .cloud::before {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #fffed6 0%, #e8d4b8 100%);
+            border-radius: 50%;
+            top: 20px;
+            right: -35px;
+        }
+
+        /* Título */
+        .title-container {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+        }
+
+        .title-board {
+            background: linear-gradient(to bottom, #d9754a 0%, #b95530 100%);
+            border: 4px solid #8b3a1a;
+            border-radius: 12px;
+            padding: 15px 50px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .title-text {
+            font-size: 42px;
+            font-weight: bold;
+            font-style: italic;
+            color: #ffd95a;
+            text-shadow: 
+                3px 3px 0 #5a2a0a,
+                -1px -1px 0 #5a2a0a,
+                1px -1px 0 #5a2a0a,
+                -1px 1px 0 #5a2a0a;
+        }
+
+        /* Cadenas del título */
+        .title-chain {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 200" preserveAspectRatio="none"><defs><linearGradient id="cg" x1="0%25" y1="0%25" x2="100%25" y2="0%25"><stop offset="0%25" style="stop-color:%23555;stop-opacity:1" /><stop offset="50%25" style="stop-color:%23777;stop-opacity:1" /><stop offset="100%25" style="stop-color:%23444;stop-opacity:1" /></linearGradient></defs><ellipse cx="20" cy="20" rx="12" ry="18" fill="none" stroke="url(%23cg)" stroke-width="5"/><ellipse cx="20" cy="55" rx="12" ry="18" fill="none" stroke="url(%23cg)" stroke-width="5"/><ellipse cx="20" cy="90" rx="12" ry="18" fill="none" stroke="url(%23cg)" stroke-width="5"/><ellipse cx="20" cy="125" rx="12" ry="18" fill="none" stroke="url(%23cg)" stroke-width="5"/><ellipse cx="20" cy="160" rx="12" ry="18" fill="none" stroke="url(%23cg)" stroke-width="5"/></svg>');
+            background-size: contain;
+            background-repeat: repeat-y;
+            top: -60px;
+        }
+
+        .chain-left { left: 40px; }
+        .chain-right { right: 40px; }
+
+        /* Podio */
+        .podium-container {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .podium-place {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .podium-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #5a3a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .avatar-cyan {
+            background: linear-gradient(135deg, #7bffca 0%, #5be0b0 100%);
+        }
+
+        .avatar-pink {
+            background: linear-gradient(135deg, #ff9bca 0%, #ff7bb0 100%);
+        }
+
+        .avatar-blue {
+            background: linear-gradient(135deg, #7ba0ff 0%, #5b80e0 100%);
+        }
+
+        .podium-base {
+            background: linear-gradient(to bottom, #5a4a3a 0%, #3a2a1a 100%);
+            border: 4px solid #2a1a0a;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+
+        .podium-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffd95a;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 5px;
+        }
+
+        .podium-score {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff9040;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .second-place .podium-base {
+            height: 120px;
+        }
+
+        .first-place .podium-base {
+            height: 160px;
+            background: linear-gradient(to bottom, #6a5a4a 0%, #4a3a2a 100%);
+        }
+
+        .third-place .podium-base {
+            height: 90px;
+        }
+
+        /* Paneles de clasificación */
+        .ranking-panels {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .ranking-panel {
+            background: linear-gradient(to bottom, #e8d4b8 0%, #d8c4a8 100%);
+            border: 4px solid #8b6a4a;
+            border-radius: 12px;
+            width: 520px;
+            padding: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+
+        .panel-header {
+            background: linear-gradient(to bottom, #d9754a 0%, #b95530 100%);
+            border: 3px solid #8b3a1a;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .panel-title {
+            font-size: 20px;
+            font-weight: bold;
+            font-style: italic;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .ranking-row {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-bottom: 3px dashed #8b6a4a;
+        }
+
+        .ranking-row:last-child {
+            border-bottom: none;
+        }
+
+        .rank-number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #5a3a2a;
+            min-width: 40px;
+        }
+
+        .rank-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid #5a3a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .rank-name {
+            flex-grow: 1;
+            font-size: 22px;
+            font-weight: bold;
+            color: #d9750a;
+            text-shadow: 
+                2px 2px 0 rgba(0,0,0,0.2);
+        }
+
+        .rank-score {
+            font-size: 20px;
+            font-weight: bold;
+            color: #5a3a2a;
+        }
+
+        .avatar-yellow {
+            background: linear-gradient(135deg, #ffe07b 0%, #ffd05b 100%);
+        }
+
+        .avatar-green {
+            background: linear-gradient(135deg, #7bffb0 0%, #5be090 100%);
+        }
+
+        .avatar-purple {
+            background: linear-gradient(135deg, #c77bff 0%, #a75be0 100%);
+        }
+
+        /* Botón volver al menú */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            width: 90px;
+            height: 90px;
+            border: none;
+            cursor: pointer;
+            background: url("img/botonchico.png") center/cover no-repeat;
+        }

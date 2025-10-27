@@ -1,0 +1,527 @@
+/* Responsive */
+@media (max-width: 900px) {
+  .logo-draftosaurus {
+    width: 90vw;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .titulo {
+    font-size: 2rem;
+    margin-top: 40px;
+  }
+
+  .formulario {
+    min-width: 180px;
+    max-width: 95vw;
+    padding: 18px 8px 14px;
+  }
+
+  .btn,
+  .menu-btn {
+    width: 70%;
+    font-size: 1rem;
+  }
+
+  .bottom-buttons {
+    gap: 10px;
+    bottom: 30px;
+  }
+
+  .menu-botones {
+    margin-top: 40px;
+    gap: 14px;
+  }
+}
+
+@media(max-width:560px) {
+  .perfil-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "avatar" "usuario" "nivel" "stats";
+    gap: 14px;
+    text-align: center;
+  }
+
+  .perfil-usuario {
+    justify-content: center;
+  }
+
+  .perfil-stats .stat {
+    grid-template-columns: 1fr auto;
+  }
+
+  .perfil-foto {
+    width: 80px;
+    height: 80px;
+  }
+
+  .perfil-username {
+    font-size: 1.3rem;
+  }
+
+  .perfil-nivel .perfil-label {
+    font-size: 1.15rem;
+  }
+
+  .perfil-nivel-num {
+    font-size: 1.6rem;
+  }
+
+  .perfil-stats dt,
+  .perfil-stats dd {
+    font-size: 1.05rem;
+  }
+}
+
+/* ===== Responsive overlays ===== */
+@media(max-width:900px) {
+  .perfil-grid {
+    grid-template-columns: 110px 1fr;
+    grid-template-areas: "avatar usuario" "nivel  nivel" "stats  stats";
+    gap: 18px 22px;
+  }
+
+  .perfil-foto {
+    width: 90px;
+    height: 90px;
+  }
+
+  .perfil-username {
+    font-size: 1.5rem;
+  }
+
+  .perfil-nivel-num {
+    font-size: 1.8rem;
+  }
+
+  .perfil-stats dt,
+  .perfil-stats dd {
+    font-size: 1.15rem;
+  }
+}
+
+@media(max-width:600px) {
+  .menu-btn {
+    height: 50px;
+    font-size: 1rem;
+  }
+}
+
+/* ====== REGISTRO / LOGIN (agregar.php y login.php) ====== */
+
+/* Móviles ≤599px */
+@media (max-width: 599px) {
+
+  /* Deja de forzar 100vh: que crezca con el contenido */
+  .container {
+    height: auto !important;
+    /* usa dvh si el navegador lo soporta (mejor con teclado móvil) */
+    min-height: 100vh;
+    padding: 12px 3vw 24px !important;
+    overflow: visible;
+    /* evita scroll artificial */
+  }
+
+  @supports (height: 100dvh) {
+    .container {
+      min-height: 100dvh;
+    }
+  }
+
+  /* Bordes decorativos más finos para ganar espacio útil */
+  .borde.top,
+  .borde.bottom {
+    height: 10px;
+  }
+
+  .borde.left,
+  .borde.right {
+    width: 10px;
+  }
+
+  /* Título más compacto */
+  .titulo {
+    margin: 20px 0 12px !important;
+    font-size: clamp(1.6rem, 6vw, 2rem) !important;
+  }
+
+  /* El pergamino no debe “empujar” el viewport */
+  .formulario {
+    width: min(92vw, 420px) !important;
+    max-width: 92vw !important;
+    /* alto auto, pero que no se pase del viewport */
+    max-height: calc(100vh - 160px) !important;
+    /* margen para título/bordes */
+    overflow: auto;
+    /* scroll interno si hace falta */
+    padding: 20px 14px 14px !important;
+    border-width: 3px !important;
+    border-radius: 10px !important;
+    background-size: cover;
+    /* mantiene el look del pergamino */
+    gap: 10px !important;
+  }
+
+  .formulario label {
+    font-size: .95rem;
+  }
+
+  .formulario input {
+    padding: 8px 10px;
+    font-size: 1rem;
+  }
+
+  .formulario .btn.aceptar {
+    height: 46px;
+    font-size: .98rem;
+  }
+
+  .strength-bar {
+    height: 4px;
+  }
+
+  #strengthText {
+    font-size: 13px;
+  }
+
+  .password-require {
+    font-size: .8rem;
+    margin: 6px auto 0;
+  }
+
+  /* Link “¿Ya tenés una cuenta?” en una sola línea si puede */
+  .text-links,
+  .container>div[style*="text-align: center"] {
+    margin-top: 12px !important;
+    padding: 0 4px;
+  }
+}
+
+/* Tablets 600–899px */
+@media (min-width: 600px) and (max-width: 899px) {
+  .container {
+    height: auto !important;
+    min-height: 100vh;
+    padding: 20px 4vw 32px !important;
+  }
+
+  @supports (height: 100dvh) {
+    .container {
+      min-height: 100dvh;
+    }
+  }
+
+  .titulo {
+    margin: 36px 0 16px;
+    font-size: clamp(2rem, 3.6vw, 2.4rem);
+  }
+
+  .formulario {
+    width: min(86vw, 480px);
+    max-height: calc(100vh - 180px);
+    overflow: auto;
+    padding: 24px 18px 18px;
+  }
+}
+
+/* Laptops chicas 900–1279px (ajuste suave) */
+@media (min-width: 900px) and (max-width: 1279px) {
+  
+  .formulario {
+    width: min(70vw, 520px);
+  }
+}
+@media screen and (max-width: 599px) {
+        
+  
+}
+
+.butn {
+  display: inline-block;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  width: 90px;
+  height: 90px;
+  border: none;
+  cursor: pointer;
+  /* Fondo de tablita o círculo */
+  background: url("../img/botonchico.png") center/cover no-repeat;
+}
+
+.back-btn:hover {
+  transform: scale(1.15);
+  transition: transform 0.2s;
+}
+
+.back-btn-img {
+  z-index: 100;
+  width: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.overlay-img {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;        
+  transform: rotateY(180deg);
+}
+.overlay-img img {
+  width: 120px;        
+  height: auto;        
+  pointer-events: none; 
+}
+
+.cadenas-wrapper1 {
+  position: fixed;
+  left: 50%;
+  top: 100px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 100px; /* separación entre las dos cadenas */
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+  width: auto;
+  height: auto;
+}
+
+.cadenas1 {
+  width: clamp(180px, 20vw, 360px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  background: url("../img/cadenas.png") center/contain no-repeat;
+  background-size: contain;
+  pointer-events: none;
+}
+
+/* nueva regla para las cadenas 2 */
+.cadenas2 {
+  width: clamp(180px, 280px, 360px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  background: url("../img/cadenas.png") center/contain no-repeat; /* o usa ../img/cadenas.png si no tienes cadenas2.png */
+  background-size: contain;
+  pointer-events: none;
+}
+
+/* ajuste móvil */
+@media (max-width: 599px) {
+  .cadenas-wrapper1 {
+    gap: 60px;
+  }
+  .cadenas1, .cadenas2 {
+    width: clamp(120px, 28vw, 180px);
+  }
+}
+
+.cadenas-wrapper2 {
+  position: fixed;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: -1; /* igual detrás de la UI */
+  width: auto;
+  height: auto;
+}
+
+/* opcional: si la animación viene de .btn general */
+/* ===== RESPONSIVE - MÓVIL ===== */
+@media (max-width: 599px) {
+  .menu {
+    padding: 10px;
+  }
+
+  .logo-menu {
+    margin: 40px auto -50px;
+    max-width: 90vw;
+  }
+
+  .menu-botones {
+    margin-top: 80px;
+    gap: 15px;
+    padding: 0 10px;
+  }
+
+  .menu-botonespro {
+    margin-top: 100px;
+    gap: 30px;
+  }
+
+  .menu-btn {
+    height: 55px;
+  }
+
+  .perfil-btn,
+  .opciones-btn {
+    top: 20px;
+    width: 70px;
+    height: 70px;
+  }
+
+  .perfil-btn {
+    left: 15px;
+  }
+
+  .opciones-btn {
+    right: 15px;
+  }
+
+  .perfil-modal,
+  .opciones-modal {
+    padding: 1.5rem 1rem;
+    border-width: 6px;
+  }
+
+  .perfil-stats .stat {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 4px;
+  }
+
+  .opcion-control {
+    gap: 8px;
+  }
+
+  .opcion-control input[type="range"] {
+    width: 90%;
+  }
+}
+
+/* ===== TABLET ===== */
+@media (min-width: 600px) and (max-width: 900px) {
+  .logo-menu {
+    margin: 50px auto -60px;
+    max-width: 70vw;
+  }
+
+  .menu-botones {
+    margin-top: 100px;
+    gap: 18px;
+  }
+
+  .perfil-btn,
+  .opciones-btn {
+    width: 85px;
+    height: 85px;
+  }
+}
+
+/* ===== Utilidades ===== */
+.is-hidden {
+  display: none !important;
+}
+
+/* Prevenir animaciones no deseadas */
+.menu-btnpro,
+.menu-btnpro:active,
+.menu-btnpro:focus {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+/* Error messages */
+#perfil-foto-error {
+  color: #d32f2f;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  margin-top: 5px;
+  text-align: center;
+}
+
+/* Servidores */
+/* Responsive */
+@media (max-width: 768px) {
+  .servers-container {
+    padding: 110px 25px 30px;
+    width: min(600px, 92vw);
+  }
+
+  .servers-title-overlay {
+    width: 360px;
+    height: 90px;
+    font-size: 2.2rem;
+  }
+
+  .server-row {
+    grid-template-columns: 45px 90px 1fr 65px 55px;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+}
+
+@media (max-width: 520px) {
+  .servers-container {
+    padding: 100px 15px 25px;
+  }
+
+  .servers-title-overlay {
+    width: 300px;
+    height: 75px;
+    font-size: 1.8rem;
+    top: -15px;
+  }
+
+  .servers-title-overlay::before,
+  .servers-title-overlay::after {
+    top: -30px;
+    font-size: 2rem;
+  }
+
+  .servers-title-overlay::before {
+    left: 40px;
+  }
+
+  .servers-title-overlay::after {
+    right: 40px;
+  }
+
+  .server-row {
+    grid-template-columns: 40px 80px 1fr 50px;
+    gap: 8px;
+    padding: 12px 10px;
+  }
+
+  .server-row::after {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+
+  .server-icon {
+    font-size: 1.6rem;
+    width: 40px;
+  }
+
+  .server-sala {
+    font-size: 0.95rem;
+  }
+
+  .server-players {
+    font-size: 0.9rem;
+  }
+
+  .join-btn.small {
+    width: 50px;
+    height: 50px;
+  }
+
+  .lock-overlay {
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,66 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.logo-draftosaurus {
+  display: block;
+  margin: 80px auto 40px;
+  max-width: 1200px;
+  width: 80vw;
+  height: auto;
+}
+
+.bottom-buttons a {
+  color: var(--accent, var(--color-secundario));
+  font-family: var(--titulo-texto);
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px #000, 0 0 25px var(--accent), 0 0 5px #000;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 5px;
+  transition: filter .2s, transform .2s;
+}
+
+.bottom-buttons a::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--color-madera), var(--color-titulo));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .4s ease-in-out;
+}
+
+.bottom-buttons a:hover {
+  filter: brightness(92%);
+  transform: translateY(2px);
+}
+
+.bottom-buttons a:hover::before {
+  transform: scaleX(1);
+}
+
+
+
+.merch {
+  position: fixed;     
+  bottom: 20px;         
+  left: 20px;          
+  z-index: 9999;
+}
+
+.merch img {
+  border-radius: 18px;      
+  width: 80px;
+  margin-left: 0.5rem;        
+  height: auto;        
+  cursor: pointer;
+}

@@ -1,0 +1,20 @@
+<?php
+return [
+  'aceptar' => 'Accept',
+  'aumentar' => 'Increase',
+  'cerrar' => 'Close',
+  'contrase_a_de_la_sala' => 'Room password',
+  'crear_partida' => 'Create game',
+  'crear_partida_draftosaurus' => 'Create game - Draftosaurus',
+  'disminuir' => 'Decrease',
+  'ej_sala_amigos' => 'e.g., Friends Room',
+  'informaci_n_de_la_partida' => 'Game info',
+  'nombre_de_la_sala' => 'Room name',
+  'n_de_jugadores' => '# of Players',
+  'n_mero_de_jugadores' => 'Number of players',
+  'opcional' => 'Optional',
+  'partida_privada' => 'Private game',
+  'partida_privada_visual' => 'Private game (visual)',
+  'volver_al_men' => 'Back to menu',
+  'info_title' => 'info-title',
+];

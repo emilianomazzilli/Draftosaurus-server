@@ -1,0 +1,276 @@
+/* Estilos para crear partida (usa fondo pergamino y tabla como título) */
+
+.create-game-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  gap: 18px;
+}
+
+/* Título con imagen tabla.png */
+.title-banner {
+  width: min(520px, 90%);
+  height: 90px;
+  display: grid;
+  place-items: center;
+  font-family: "Agbalumo", system-ui;
+  font-size: 3rem;
+  color: var(--color-secundario);
+  text-shadow: 1px 1px 2px #000, 0 0 25px var(--color-secundario), 0 0 5px #000;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+/* Pergamino panel */
+.panel.pergamino {
+  background: url("../img/pergamino.png") center/cover no-repeat;
+  padding: 20px;
+  border-radius: 12px;
+  border: 10px solid #b8864b;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Labels y campos */
+.field-label {
+  font-family: "Agbalumo", system-ui;
+  color: #6d4c1b;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.field-input {
+  font-family: "Agbalumo", system-ui;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 3px solid #7a5222;
+  background: rgba(255,255,255,0.95);
+  font-size: 1rem;
+  outline: none;
+}
+
+.field-input:focus {
+  box-shadow: 0 0 0 6px rgba(213,133,22,0.12);
+}
+
+/* fila privada + info */
+.row.private-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.private-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* pequeño switch */
+.switch-wrapper {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  display: inline-block;
+}
+.switch-wrapper input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.switch-wrapper .slider-small {
+  position: absolute;
+  inset: 0;
+  background: #5c2e15;
+  border-radius: 26px;
+  border: 2px solid #3a1b0d;
+  transition: .25s;
+}
+.switch-wrapper .slider-small::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  background: #d7a055;
+  border-radius: 50%;
+  transition: .25s;
+}
+.switch-wrapper input:checked + .slider-small {
+  background: #40220f;
+}
+.switch-wrapper input:checked + .slider-small::before {
+  transform: translateX(20px);
+}
+
+/* Info button */
+.info-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid #7a5222;
+  background: linear-gradient(180deg,#f4d7a2,#d7a055);
+  color: #3d2b12;
+  font-weight: 800;
+  font-family: "Agbalumo", system-ui;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  box-shadow: 0 4px 0 #7a5222;
+}
+
+/* Acción aceptar fuera del panel */
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.btn.aceptar.big-aceptar {
+  width: 220px;
+  height: 60px;
+  font-size: 1.15rem;
+  background: url("../img/tabla.png") center/100% 100% no-repeat;
+  border: 0;
+  color: var(--color-secundario);
+  text-shadow: 1px 1px 2px #000, 0 0 25px var(--color-secundario), 0 0 5px #000;
+  font-family: "Agbalumo", system-ui;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* Overlay info */
+.info-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.55);
+  z-index: 1000;
+  padding: 18px;
+}
+.info-modal.pergamino {
+  width: min(680px, 95%);
+  max-height: 80vh;
+  overflow: auto;
+  padding: 20px;
+  border-radius: 12px;
+  border: 12px solid #b8864b;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+.info-modal h2 {
+  margin: 0 0 8px;
+  color: #6d4c1b;
+  font-family: "Agbalumo", system-ui;
+}
+.info-body {
+  color: #34220f;
+  background: rgba(255,255,255,0.92);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+
+/* Close button */
+.close-info {
+  position: absolute;
+  right: 24px;
+  top: 16px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: #6d4c1b;
+  cursor: pointer;
+}
+
+/* Controles añadidos: número con flechas y switch visual */
+.number-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.number-input {
+  width: 86px;
+  text-align: center;
+}
+
+.arrow-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  border: 3px solid #7a5222;
+  background: linear-gradient(180deg,#f4d7a2,#d7a055);
+  color: #3d2b12;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #7a5222;
+  display: grid;
+  place-items: center;
+}
+
+.arrow-btn:active { transform: translateY(2px); }
+
+/* Switch solo visual */
+.switch-visual {
+  width: 46px;
+  height: 26px;
+  border-radius: 26px;
+  border: 3px solid #3a1b0d;
+  background: linear-gradient(180deg,#5c2e15,#40220f);
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #7a5222;
+}
+.switch-visual::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #d7a055;
+  top: 3px;
+  left: 3px;
+  transition: transform .22s ease;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+.switch-visual.on::after {
+  transform: translateX(20px);
+}
+
+/* pequeño ajuste responsivo */
+@media (max-width: 520px) {
+  .title-banner { height: 72px; font-size: 1.4rem; }
+  .panel.pergamino { padding: 14px; }
+  .info-btn { width: 36px; height: 36px; }
+  .btn.aceptar.big-aceptar { width: 180px; height: 54px; font-size: 1rem; }
+  .number-input { width: 68px; }
+  .arrow-btn { width: 36px; height: 36px; }
+}
+
+/* Corregir centrado horizontal en Crear Partida */
+.container.create-game-page {
+  /* evitar 100vw que incluye scrollbar; usar 100% y restar espacio de los bordes fijos */
+  max-width: 100%;
+  padding-inline: 15px; /* deja espacio para .borde.left / .borde.right */
+  box-sizing: border-box;
+  align-items: center;
+}
+
+/* asegurar que el panel quede centrado dentro del contenedor */
+.panel.pergamino {
+  margin: 0 auto;
+}
+
+/* si aún ves un desplazamiento, desactiva overflow-x para diagnóstico */
+html, body {
+  overflow-x: hidden;
+}

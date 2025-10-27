@@ -1,0 +1,464 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin: 15px;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: var(--color-secundario);
+    text-shadow: 1px 1px 2px #000, 0 0 25px var(--color-secundario), 0 0 5px #000;
+    font-family: "Agbalumo", system-ui;
+    margin: 8px;
+}
+
+.header p {
+    color: #4b5563;
+}
+
+.inventory {
+    background: var(--bg-fondo) no-repeat;
+    background-size: cover;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.inventory h2 {
+    font-size: 1.5rem;
+    color: #1f2937;
+}
+
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+}
+
+.inventory-item {
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-item .dino-img {
+    width: 50%;
+    height: auto;
+}
+
+.inventory-item .name {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.inventory-item .count {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #374151;
+    margin-top: 5px;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 20px;
+}
+
+.dino-panel {
+    background: var(--bg-fondo) no-repeat;
+    background-size: cover;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+}
+
+.dino-panel h3 {
+    font-size: 1.2rem;
+    color: #1f2937;
+    margin-bottom: 15px;
+}
+
+.dino-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dino-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2.3px;
+    border-radius: 10px;
+    cursor: grab;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.dino-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dino-item:active {
+    cursor: grabbing;
+}
+
+.dino-item .emoji {
+    font-size: 2rem;
+}
+
+.dino-item .name {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.map-container {
+    background: var(--bg-fondo) no-repeat;
+    background-size: cover;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    margin-bottom: 20px;
+}
+
+/* FIX: garantiza altura y muestra el tablero como background */
+.map-wrapper {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    min-height: 600px;
+    background: #f3f4f6 url('../img/tablero.png') center / contain no-repeat;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.map-image {
+    /* Ocultar el <img> porque usamos background */
+    display: none;
+}
+
+.zone {
+    position: absolute;
+    border: 2px dashed #41f63b;
+    border-radius: 12px;
+    transition: all 0.3s;
+    min-height: 80px;
+}
+
+.zone:hover,
+.zone.drag-over {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.25);
+    border-width: 4px;
+}
+
+.zone-label {
+    position: absolute;
+    top: -22px;
+    left: -5px;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 0.5rem;
+    font-weight: bold;
+    color: #1f2937;
+    z-index: 10;
+}
+
+.zone-count {
+    position: absolute;
+    top: -10px;
+    right: -22px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 3px 8px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    font-size: 0.7rem;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.zone-dinos {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    right: 5px;
+    bottom: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-content: flex-start;
+    overflow: auto;
+}
+
+.zone-dino {
+    width: 25px;
+    height: 25px;
+    border-radius: 8px;
+    padding: 5px;
+    cursor: move;
+    position: relative;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    user-select: none;
+}
+
+.zone-dino:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.zone-dino:active {
+    cursor: grabbing;
+}
+
+.zone-dino .emoji {
+    font-size: 2rem;
+}
+
+.zone-dino .delete-btn {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: #ef4444;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.zone-dino:hover .delete-btn {
+    opacity: 1;
+}
+
+.zone-summary {
+    position: absolute;
+    bottom: 0px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 5px 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 0.75rem;
+    text-align: center;
+    z-index: 10;
+}
+
+.color-red {
+    background-color: #fee2e2;
+}
+
+.color-green {
+    background-color: #dcfce7;
+}
+
+.color-blue {
+    background-color: #dbeafe;
+}
+
+.color-yellow {
+    background-color: #fef9c3;
+}
+
+.color-purple {
+    background-color: #f3e8ff;
+}
+
+.color-orange {
+    background-color: #fed7aa;
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+
+    .inventory-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    width: 90px;
+    height: 90px;
+    border: none;
+    cursor: pointer;
+    background: url('../img/botonchico.png') center/cover no-repeat;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+}
+
+.back-btn:active {
+    transform: translateY(1px);
+}
+
+.tool-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 92%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.tool-overlay.hidden {
+    display: none;
+}
+
+.tool-modal {
+    background: url('../img/pergamino.png') center / cover no-repeat;
+    padding: 20px 24px;
+    border: 12px solid #b8864b;
+    border-radius: 12px;
+    width: 60%;
+    height: 40%;
+    gap: 20px;
+    display: flex;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tool-modal h2 {
+    margin: 0 0 8px;
+    color: #6d4c1b;
+    font-family: "Agbalumo", system-ui;
+}
+
+.tool-modal p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+.tool-close {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    font-size: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6d4c1b;
+}
+
+.info-top {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 200;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(180deg, #f4d7a2, #d7a055);
+    box-shadow: 0 4px 0 #7a5222;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-family: "Agbalumo", system-ui;
+}
+
+.dino {
+    width: 15%;
+    height: auto;
+}
+
+/* Carrusel dentro del overlay */
+.tool-modal { position: relative; }
+.tool-carousel { overflow: hidden; width: 100%; max-width: 820px; margin: 0 12px; }
+.tool-carousel-track {
+  display: flex;
+  transition: transform .35s cubic-bezier(.22,.9,.3,1);
+  will-change: transform;
+}
+.tool-slide {
+  box-sizing: border-box;
+  padding: 18px;
+  min-width: 100%;
+  flex: 0 0 100%;
+  color: #6d4c1b;
+  text-align: left;
+}
+
+/* Flechas */
+.tool-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.9);
+  color: #6d4c1b;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  display: grid;
+  place-items: center;
+  z-index: 12;
+  transition: transform .12s ease, opacity .12s ease;
+}
+.tool-nav.left { left: 8px; }
+.tool-nav.right { right: 8px; }
+.tool-nav:disabled { opacity: .45; cursor: default; transform: scale(.98); }
+.tool-nav:not(:disabled):hover { transform: translateY(-50%) scale(1.06); }
+
+/* Indicadores (dots) */
+.tool-indicators {
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin-top:10px;
+}
+.tool-indicator {
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  border:none;
+  background:rgba(109,76,27,.25);
+  cursor:pointer;
+}
+.tool-indicator:disabled { background: #6d4c1b; cursor: default; }
+
+/* Pequeña animación al abrir slide */
+.tool-slide { transform-origin: center top; }
+
+.zone-dino-img {
+    width: 35px;
+    height: auto;
+}
