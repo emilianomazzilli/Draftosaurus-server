@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '/../lang/boot.php';
 // login.php - Vista de inicio de sesión
 if (session_status() === PHP_SESSION_NONE) {
   session_set_cookie_params([
@@ -38,19 +39,19 @@ $success = $_GET['ok'] ?? '';
   <div class="borde left"></div>
   <div class="borde right"></div>
   <div class="container">
-    <h1 class="titulo">Iniciar sesión</h1>
+    <h1 class="titulo"><?= t('login.login') ?></h1>
 
     <?php if ($success): ?>
       <div class="success-message">
-        ¡Registro exitoso! Ahora puedes iniciar sesión.
+        <?= t('login.succmess') ?>
       </div>
     <?php endif; ?>
 
     <form class="formulario" id="login-form" action="../Controlador/process_login.php" method="post">
-      <label for="usuario">Usuario o Email</label>
+      <label for="usuario"><?= t('login.useremail') ?></label>
       <input type="text" id="usuario" name="usuario">
 
-      <label for="password">Contraseña</label>
+      <label for="password"><?= t('login.passwd') ?></label>
       <input type="password" id="password" name="contrasena">
 
       <?php if ($error): ?>
@@ -60,15 +61,15 @@ $success = $_GET['ok'] ?? '';
       <?php endif; ?>
 
 
-      <button type="submit" class="btn aceptar">Aceptar</button>
+      <button type="submit" class="btn aceptar"><?= t('login.accept') ?></button>
     </form>
 
     <div class="text-links">
-      <a class="text-link" href="index.php">Volver al inicio</a>
+      <a class="text-link" href="index.php"><?= t('login.backto') ?></a>
     </div>
 
     <div class="text-links">
-      <a class="text-link" href="../Controlador/agregar.php">¿Aún no tenés cuenta?, Registrate</a>
+      <a class="text-link" href="../Controlador/agregar.php"><?= t('login.dontacc') ?></a>
     </div>
   </div>
    <!-- Dinosaruio Abajo a La Derecha todo pro -->

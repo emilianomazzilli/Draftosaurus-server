@@ -34,10 +34,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <!-- Botones menú -->
     <div class="menu-botonespro">
-      <a class="butn menu-btnpro"><?= t('menu.find') ?></a>
-      <a href="creategame.php" class="btn menu-btn"><?= t('menu.create') ?></a>
-      <a href="servers.php" class="btn menu-btn"><?= t('menu.servers') ?></a>
-      <a href="#" class="btn menu-btn" id="buscar-codigo-btn"><?= t('menu.searchcode') ?></a>
+      <a class="butn menu-btnpro"><?= t('searchgame.find') ?></a>
+      <a href="creategame.php" class="btn menu-btn"><?= t('searchgame.create') ?></a>
+      <a href="servers.php" class="btn menu-btn"><?= t('searchgame.servers') ?></a>
+      <a href="#" class="btn menu-btn" id="buscar-codigo-btn"><?= t('searchgame.searchcode') ?></a>
     </div>
 
     <!-- Overlay de buscar código -->

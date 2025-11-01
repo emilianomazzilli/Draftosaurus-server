@@ -54,7 +54,7 @@ if (session_status() === PHP_SESSION_NONE) {
       <div class="perfil-modal">
         <button type="button" class="close-perfil" aria-label="Cerrar" onclick="cerrarPerfilOverlay()">×</button>
         <header class="perfil-header">
-          <h2 id="perfil-titulo" class="perfil-titulo">Perfil</h2>
+          <h2 id="perfil-titulo" class="perfil-titulo"><?= t('menu.perfil') ?></h2>
         </header>
 
         <!-- Layout principal -->
@@ -67,7 +67,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <form id="perfil-foto-form" class="perfil-foto-form">
               <input type="file" id="foto-input" name="foto" accept="image/*" style="display: none;">
               <button type="button" class="perfil-foto-btn" onclick="document.getElementById('foto-input').click()">
-                📷 Cambiar foto
+                <?= t('menu.changephoto') ?>
               </button>
               <div id="perfil-foto-error" class="error-message" aria-live="polite"></div>
             </form>
@@ -75,13 +75,13 @@ if (session_status() === PHP_SESSION_NONE) {
 
           <!-- Centro: usuario -->
           <div class="perfil-usuario">
-            <span class="perfil-label">Usuario:</span>
+            <span class="perfil-label"><?= t('menu.user') ?></span>
             <span id="perfil-username" class="perfil-username">
               <?= htmlspecialchars($_SESSION['nombre'] ?? 'Invitado') ?>
             </span>
             <!-- Nuevo: email -->
             <div class="perfil-email-row" style="margin-top:6px;">
-              <span class="perfil-label">Email:</span>
+              <span class="perfil-label"><?= t('menu.email') ?></span>
               <span id="perfil-email" class="perfil-email">
                 <?= htmlspecialchars($_SESSION['email'] ?? '') ?>
               </span>
@@ -91,15 +91,15 @@ if (session_status() === PHP_SESSION_NONE) {
           <!-- Fila de estadísticas -->
           <dl class="perfil-stats">
             <div class="stat">
-              <dt>Partidas jugadas:</dt>
+              <dt><?= t('menu.gamesplayed') ?></dt>
               <dd id="stat-jugadas">x</dd>
             </div>
             <div class="stat">
-              <dt>Partidas ganadas:</dt>
+              <dt><?= t('menu.gameswinned') ?></dt>
               <dd id="stat-ganadas">x</dd>
             </div>
             <div class="stat">
-              <dt>Puntaje más alto:</dt>
+              <dt><?= t('menu.highscore') ?></dt>
               <dd id="stat-max">x</dd>
             </div>
           </dl>
@@ -113,21 +113,21 @@ if (session_status() === PHP_SESSION_NONE) {
       <div class="opciones-modal-wrapper">
       </div>
       <div class="opciones-modal">
-        <span class="opciones-nombre-titulo">Opciones</span>
+        <span class="opciones-nombre-titulo"><?= t('menu.options') ?></span>
         <span class="close-opciones" onclick="cerrarOpcionesOverlay()">×</span>
         <div class="opciones-contenido">
           <div class="opcion-control">
-            <label for="sonido-range"><b>Sonido</b></label>
+            <label for="sonido-range"><b><?= t('menu.sound') ?></b></label>
             <input type="range" id="sonido-range" min="0" max="100" value="50" oninput="actualizarSonido(this.value)">
             <span id="sonido-valor">50</span>%
           </div>
           <div class="opcion-control">
-            <label for="musica-range"><b>Música</b></label>
+            <label for="musica-range"><b><?= t('menu.music') ?></b></label>
             <input type="range" id="musica-range" min="0" max="100" value="50" oninput="actualizarMusica(this.value)">
             <span id="musica-valor">50</span>%
           </div>
           <div class="opcion-item">
-            <span>Modo Oscuro</span>
+            <span><?= t('menu.darkmode') ?></span>
             <label class="theme-switch">
               <input type="checkbox" id="darkMode">
               <span class="slider"></span>

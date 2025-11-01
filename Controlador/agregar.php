@@ -1,6 +1,7 @@
 <?php
 // Controlador/agregar.php
 declare(strict_types=1);
+require __DIR__ . '/../lang/boot.php';
 
 require_once __DIR__ . '/../Modelo/conexion.php'; // Debe definir $con (mysqli)
 
@@ -17,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrarse - Draftosaurus</title>
+    <title><?= t('agregar.title') ?></title>
     <link rel="stylesheet" href="../Css/styles.css">
     <link rel="stylesheet" href="../Css/form.css">
     <link rel="stylesheet" href="../Css/media.css">
@@ -30,34 +31,34 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     <div class="borde right"></div>
 
     <div class="container">
-      <h1 class="titulo">Registrarse</h1>
+      <h1 class="titulo"><?= t('agregar.register') ?></h1>
 
       <form class="formulario" action="../Controlador/agregar.php" method="post" novalidate>
-        <label for="email">Email</label>
+        <label for="email"><?= t('agregar.email') ?></label>
         <input type="email" id="email" name="email" required autocomplete="email">
 
-        <label for="usuario">Usuario</label>
+        <label for="usuario"><?= t('agregar.user') ?></label>
         <input type="text" id="usuario" name="usuario" required autocomplete="username">
 
-        <label for="password">Contraseña</label>
+        <label for="password"><?= t('agregar.passwd') ?></label>
         <input type="password" id="password" name="contrasena" required autocomplete="new-password">
 
         <div class="strength-bar" id="strengthBar"></div>
         <span id="strengthText"></span>
 
         <ul class="password-require">
-          <li>Al menos 8 caracteres</li>
-          <li>Al menos una letra mayúscula</li>
-          <li>Al menos una letra minúscula</li>
-          <li>Al menos un número</li>
-          <li>Al menos un carácter especial (!@#$%^&*)</li>
+          <li><?= t('agregar.8char') ?></li>
+          <li><?= t('agregar.1letup') ?></li>
+          <li><?= t('agregar.1letdown') ?></li>
+          <li><?= t('agregar.1num') ?></li>
+          <li><?= t('agregar.1charspec') ?></li>
         </ul>
 
-        <button type="submit" class="btn aceptar">Aceptar</button>
+        <button type="submit" class="btn aceptar"><?= t('agregar.accept') ?></button>
       </form>
 
-      <div style="text-align: center; margin-top: 15px;">
-        <a href="../Vista/login.php" style="color: #000000ff;">¿Ya tenés una cuenta? Iniciá sesión</a>
+      <div >
+        <a href="../Vista/login.php" class="text-link"><?= t('agregar.mess') ?></a>
       </div>
     </div>
 
