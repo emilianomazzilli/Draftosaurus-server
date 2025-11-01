@@ -11,12 +11,12 @@ return [
 
     //al menos...
     '8char'   => 'At least 8 characters',
-    '1letup'   => 'At least ONE Capital letter',
+    '1letup'   => 'At least ONE Uppercase letter',
     '1letdown'  => 'At least ONE Lowercase letter',
     '1num'  => 'At least ONE Number',
     '1charspec'  => 'At least ONE Special Character (!@#$%^&*)',
 
     //Botones
-    'accept' => 'Aceptar',
-    'mess' => '¿Ya tenés una cuenta? Iniciá Sesión',
+    'accept' => 'Accept',
+    'mess' => '¿Already have an account? Log in',
 ];
