@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '/../lang/boot.php';
 // login.php - Vista de inicio de sesión
 if (session_status() === PHP_SESSION_NONE) {
   session_set_cookie_params([
@@ -32,6 +33,10 @@ $success = $_GET['ok'] ?? '';
   <div class="borde bottom"></div>
   <div class="borde left"></div>
   <div class="borde right"></div>
+  
+  <!-- Hojas cayendo -->
+  <div class="leaves" id="leaves"></div>
+
   <!-- Dinosaruio Abajo a La Derecha todo pro -->
   <div class="overlay-img">
     <img src="../img/dino.png">
@@ -53,25 +58,25 @@ $success = $_GET['ok'] ?? '';
         <div class="tool-carousel-track">
           <!-- Slide 0 (original) -->
           <section class="tool-slide" data-index="0">
-            <h2 id="tool-title">Bienvenido al Modo Herramienta</h2>
-            <p>En este modo podrás calcular los puntos, visualizar cuál puede ser tu mejor movimiento</p>
-            <p>para maximizar tu puntaje y ganar tu partida de Draftosaurus!</p>
+            <h2 id="tool-title"><?= t('tool.welcome') ?></h2>
+            <p><?= t('tool.welcome_description1') ?></p>
+            <p><?= t('tool.welcome_description2') ?></p>
           </section>
 
           <!-- Slide 1 (ejemplo: instrucciones) -->
           <section class="tool-slide" data-index="1">
-            <h2>Cómo usar el Modo Herramienta</h2>
+            <h2><?= t('tool.howto') ?></h2>
             <ul>
-              <li>Arrastra dinosaurios desde la lista a las zonas del parque.</li>
-              <li>Consulta el panel de puntaje para ver resultados por zona.</li>
-              <li>Usa las flechas para leer más consejos.</li>
+              <li><?= t('tool.instruction1') ?></li>
+              <li><?= t('tool.instruction2') ?></li>
+              <li><?= t('tool.instruction3') ?></li>
             </ul>
           </section>
 
           <!-- Slide 2 (ejemplo: atajos) -->
           <section class="tool-slide" data-index="2">
-            <h2>Atajos útiles</h2>
-            <p>Teclas: ← / → para navegar, Esc para cerrar la ventana.</p>
+            <h2><?= t('tool.shortcuts') ?></h2>
+            <p><?= t('tool.shortcuts_description') ?></p>
           </section>
         </div>
 
@@ -89,13 +94,13 @@ $success = $_GET['ok'] ?? '';
 
   <div class="container">
     <div class="inventory">
-      <h2>📊 Inventario Global</h2>
+      <h2><?= t('tool.global_inventory') ?></h2>
       <div class="inventory-grid" id="inventory-grid"></div>
     </div>
 
     <div class="main-content">
       <div class="dino-panel">
-        <h3>🦴 Disponibles</h3>
+        <h3>🦴<?= t('tool.available') ?></h3>
         <div class="dino-list" id="dino-list"></div>
       </div>
 
@@ -107,7 +112,7 @@ $success = $_GET['ok'] ?? '';
       </div>
     <!-- Panel de puntajes por zona -->
     <div class="dino-panel" id="score-panel">
-      <h3>🏆 Puntaje por zona</h3>
+      <h3>🏆<?= t('tool.zone_score') ?></h3>
       <ul id="zone-scores" style="list-style:none; padding:0; margin:0;">
         <!-- Puntajes se llenan por JS -->
       </ul>

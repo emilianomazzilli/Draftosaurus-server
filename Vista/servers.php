@@ -1,3 +1,5 @@
+<?php
+require __DIR__ . '/../lang/boot.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -17,6 +19,9 @@
   <div class="borde left"></div>
   <div class="borde right"></div>
   
+  <!-- Hojas cayendo -->
+  <div class="leaves" id="leaves"></div>
+  
   <!-- Dinosaurio Abajo a La Derecha -->
   <div class="overlay-img">
     <img src="../img/dino.png" alt="Dinosaurio decorativo">
@@ -30,15 +35,15 @@
     <main class="servers-center">
       <section class="servers-container" role="region" aria-label="Lista de servidores">
         <!-- Título en tabla de madera colgante -->
-        <div class="servers-title-overlay" aria-hidden="true">Servidores</div>
+        <div class="servers-title-overlay" aria-hidden="true"><?= t('servers.servers') ?></div>
         
         <div class="server-list">
           <!-- Servidor 1 -->
           <div class="server-row">
             <span class="server-icon">🦕</span>
-            <span class="server-sala">Partida 01</span>
+            <span class="server-sala"><?= t('servers.room') ?>1</span>
             <span class="server-host">DragonKing</span>
-            <span class="server-players">0/4 jug</span>
+            <span class="server-players">0/4 <?= t('servers.play') ?></span>
             <span class="server-map">Mapa Verano</span>
             <div class="server-action">
               <button class="join-btn small" onclick="location.href='game.php'" title="Unirse"></button>
@@ -48,9 +53,9 @@
           <!-- Servidor 2 - CON CANDADO -->
           <div class="server-row locked">
             <span class="server-icon">🔐</span>
-            <span class="server-sala">Partida 02</span>
+            <span class="server-sala"><?= t('servers.room') ?>2</span>
             <span class="server-host">GenSoftware</span>
-            <span class="server-players">0/4 jug</span>
+            <span class="server-players">0/4 <?= t('servers.play') ?></span>
             <span class="server-map">Mapa Invierno</span>
             <div class="server-action">
               <button class="join-btn small" disabled title="Sala protegida"></button>
@@ -61,9 +66,9 @@
           <!-- Servidor 3 -->
           <div class="server-row">
             <span class="server-icon">🦖</span>
-            <span class="server-sala">Partida 03</span>
+            <span class="server-sala"><?= t('servers.room') ?>3</span>
             <span class="server-host">Raptor95</span>
-            <span class="server-players">0/4 jug</span>
+            <span class="server-players">0/4 <?= t('servers.play') ?></span>
             <span class="server-map">Mapa Verano</span>
             <div class="server-action">
               <button class="join-btn small" onclick="location.href='game.php'" title="Unirse"></button>
@@ -73,9 +78,9 @@
           <!-- Servidor 4 -->
           <div class="server-row">
             <span class="server-icon">🌍</span>
-            <span class="server-sala">Partida 04</span>
+            <span class="server-sala"><?= t('servers.room') ?>4</span>
             <span class="server-host">JurassicWorld</span>
-            <span class="server-players">0/4 jug</span>
+            <span class="server-players">0/4 <?= t('servers.play') ?></span>
             <span class="server-map">Mapa Invierno</span>
             <div class="server-action">
               <button class="join-btn small" onclick="location.href='game.php'" title="Unirse"></button>
@@ -85,9 +90,9 @@
           <!-- Servidor 5 - CON CANDADO -->
           <div class="server-row locked">
             <span class="server-icon">🦕</span>
-            <span class="server-sala">Partida 05</span>
+            <span class="server-sala"><?= t('servers.room') ?>5</span>
             <span class="server-host">Chinchulito24</span>
-            <span class="server-players">0/4 jug</span>
+            <span class="server-players">0/4 <?= t('servers.play') ?></span>
             <span class="server-map">Mapa Verano</span>
             <div class="server-action">
               <button class="join-btn small" disabled title="Sala protegida"></button>

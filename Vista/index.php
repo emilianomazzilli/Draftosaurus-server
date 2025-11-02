@@ -32,31 +32,33 @@ if (!empty($_SESSION['user_id'])) {
 </head>
 
 <body>
+  <!-- Hojas cayendo -->
+    <div class="leaves" id="leaves"></div>
   <!-- Botón de opciones -->
-  <button id="opciones-btn" class="opciones-btn" title="<?= t('menu.options') ?>">
-    <img src="../img/engranaje.png" alt="<?= t('menu.options') ?>" class="opciones-icon">
+  <button id="opciones-btn" class="opciones-btn" title="<?= t('index.options') ?>">
+    <img src="../img/engranaje.png" alt="<?= t('index.options') ?>" class="opciones-icon">
   </button>
   <!-- Overlay de opciones -->
   <div id="opciones-overlay" class="opciones-overlay" style="display:none;">
     <div class="opciones-modal-wrapper">
     </div>
     <div class="opciones-modal">
-      <span class="opciones-nombre-titulo">Opciones</span>
+      <span class="opciones-nombre-titulo"><?= t('index.options') ?></span>
       <span class="close-opciones" onclick="cerrarOpcionesOverlay()">×</span>
       <div class="opciones-contenido">
         <div class="opcion-control">
-          <label for="sonido-range"><b>Sonido</b></label>
+          <label for="sonido-range"><b><?= t('index.sound') ?></b></label>
           <input type="range" id="sonido-range" min="0" max="100" value="50" oninput="actualizarSonido(this.value)">
           <span id="sonido-valor">50</span>%
         </div>
         <div class="opcion-control">
-          <label for="musica-range"><b>Música</b></label>
+          <label for="musica-range"><b><?= t('index.music') ?></b></label>
           <input type="range" id="musica-range" min="0" max="100" value="50" oninput="actualizarMusica(this.value)">
           <span id="musica-valor">50</span>%
         </div>
 
         <div class="opcion-item">
-          <span>Modo Oscuro</span>
+          <span><?= t('index.darkmode') ?></span>
           <label class="theme-switch">
             <input type="checkbox" id="darkMode">
             <span class="slider"></span>

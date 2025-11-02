@@ -8,25 +8,25 @@ if (session_status() === PHP_SESSION_NONE) {
 $players = [
   [
     'id' => $_SESSION['user_id'] ?? 1,
-    'name' => $_SESSION['username'] ?? 'Usuario',
+    'name' => t('lobby.user'),
     'avatar' => '../img/perfil.png',
     'isHost' => true
   ],
   [
     'id' => 2,
-    'name' => 'Jugador 2',
+    'name' => t('lobby.player') . ' 2',
     'avatar' => '../img/dino1.png',
     'isHost' => false
   ],
   [
     'id' => 3,
-    'name' => 'Jugador 3',
+    'name' => t('lobby.player') . ' 3',
     'avatar' => '../img/dino2.png',
     'isHost' => false
   ],
   [
     'id' => 4,
-    'name' => 'Jugador 4',
+    'name' => t('lobby.player') . ' 4',
     'avatar' => '../img/dino3.png',
     'isHost' => false
   ]
@@ -60,7 +60,7 @@ $players = [
       <img src="../img/botonatras.png" alt="Volver al menú" class="back-btn-img">
     </button>
 
-    <div class="title-banner">Sala de espera</div>
+    <div class="title-banner"><?= t('lobby.waitingroom') ?></div>
 
     <div class="panel pergamino">
       <div class="players-list">
@@ -83,7 +83,7 @@ $players = [
     </div>
 
     <div class="ready-section">
-      <button id="ready-btn" class="btn ready">¿Listo?</button>
+      <button id="ready-btn" class="btn ready"><?= t('lobby.ready') ?></button>
       <div id="countdown" class="countdown"></div>
     </div>
   </div>

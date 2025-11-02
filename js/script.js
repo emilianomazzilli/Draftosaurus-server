@@ -1,5 +1,32 @@
-// ================= Fortaleza de contraseña (login.php y agregar.php) =================
-// Bloque de UI: calcula y muestra la “fuerza” de la contraseña según longitud y tipos de caracteres.
+// ================================
+// 🌿 EFECTO HOJAS CAYENDO
+// ================================
+function initFallingLeaves() {
+  const leavesContainer = document.getElementById("leaves");
+
+  // Evita duplicar hojas y respeta "prefers-reduced-motion"
+  if (!leavesContainer) return;
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (leavesContainer.dataset.init === "1") return;
+  leavesContainer.dataset.init = "1";
+
+  const leafEmojis = ["🍃", "🍂", "🌿", "🍁"];
+  for (let i = 0; i < 20; i++) {
+    const leaf = document.createElement("div");
+    leaf.className = "leaf";
+    leaf.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+    leaf.style.left = Math.random() * 100 + "%";
+    leaf.style.top = "-20px";
+    leaf.style.animationDelay = Math.random() * 10 + "s";
+    leaf.style.animationDuration = Math.random() * 10 + 10 + "s";
+    leavesContainer.appendChild(leaf);
+  }
+}
+document.addEventListener("DOMContentLoaded", initFallingLeaves);
+
+// ================================
+// 🔐 FORTALEZA DE CONTRASEÑA
+// ================================
 const passwordInput = document.getElementById("password");
 const strengthBar = document.getElementById("strengthBar");
 const strengthText = document.getElementById("strengthText");
@@ -9,172 +36,158 @@ if (passwordInput && strengthBar && strengthText) {
     const password = passwordInput.value;
     let strength = 0;
 
-    // Reglas de fuerza: longitud, mayúscula, número y símbolo.
+    // Reglas de fuerza
     if (password.length >= 8) strength++;
     if (/[A-Z]/.test(password)) strength++;
     if (/[0-9]/.test(password)) strength++;
     if (/[^A-Za-z0-9]/.test(password)) strength++;
 
-    // Actualiza barra y texto según fuerza.
+    // Feedback visual
     switch (strength) {
       case 0:
         strengthBar.style.width = "0";
+        strengthBar.style.backgroundColor = "";
+        strengthText.style.color = "";
         strengthText.textContent = "";
         break;
       case 1:
         strengthBar.style.width = "25%";
-        strengthBar.style.backgroundColor = "#ff4d4d";
-        strengthText.style.color = "#ff4d4d";
+        strengthBar.style.backgroundColor = "rgba(255,77,77,1)";
+        strengthText.style.color = "rgba(255,77,77,1)";
         strengthText.textContent = "Poco segura";
         break;
       case 2:
         strengthBar.style.width = "50%";
-        strengthBar.style.backgroundColor = "#ff944d";
-        strengthText.style.color = "#ff944d";
+        strengthBar.style.backgroundColor = "rgba(255,148,77,1)";
+        strengthText.style.color = "rgba(255,148,77,1)";
         strengthText.textContent = "Medio segura";
         break;
       case 3:
         strengthBar.style.width = "75%";
-        strengthBar.style.backgroundColor = "#14e814ff";
-        strengthText.style.color = "#14e814ff";
+        strengthBar.style.backgroundColor = "rgba(20,232,20,1)";
+        strengthText.style.color = "rgba(20,232,20,1)";
         strengthText.textContent = "Segura";
         break;
       case 4:
         strengthBar.style.width = "100%";
-        strengthBar.style.backgroundColor = "#128108ff";
-        strengthText.style.color = "#128108ff";
+        strengthBar.style.backgroundColor = "rgba(18,129,8,1)";
+        strengthText.style.color = "rgba(18,129,8,1)";
         strengthText.textContent = "Muy segura";
         break;
     }
   });
 }
 
-// ================================ AJAX formularios ================================
-// Bloque principal al cargar el DOM: tema oscuro, envío AJAX de formularios, overlays y audio.
+// ================================
+// 📬 FORMULARIOS AJAX + MODO OSCURO
+// ================================
 document.addEventListener("DOMContentLoaded", () => {
-  // ============= INICIALIZAR TEMA (MODO OSCURO) =============
-  // Lee preferencia de tema y ajusta variable CSS y checkbox.
+  // ---- Inicializar fondo según preferencia guardada
   const savedDarkMode = localStorage.getItem("darkMode");
   const darkModeCheckbox = document.getElementById("darkMode");
   const isDarkMode = savedDarkMode === "true";
 
-  if (isDarkMode) {
-    document.documentElement.style.setProperty(
-      "--bg-image",
-      'url("../img/fondoOscuro.png")'
-    );
-    if (darkModeCheckbox) darkModeCheckbox.checked = true;
-  } else {
-    document.documentElement.style.setProperty(
-      "--bg-image",
-      'url("../img/fondo.png")'
-    );
-    if (darkModeCheckbox) darkModeCheckbox.checked = false;
-  }
+  document.documentElement.style.setProperty(
+    "--bg-image",
+    isDarkMode ? 'url("../img/fondoOscuro.png")' : 'url("../img/fondo.png")'
+  );
+  if (darkModeCheckbox) darkModeCheckbox.checked = isDarkMode;
 
-  // Envío AJAX para todos los formularios con clase .formulario (login, registro, etc.).
+  // ---- Envío AJAX para formularios con clase .formulario
   const forms = document.querySelectorAll("form.formulario");
 
   forms.forEach((form) => {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (e.stopImmediatePropagation) e.stopImmediatePropagation();
 
       const data = new FormData(form);
 
-      // Petición POST; maneja redirecciones o texto de respuesta para mostrar errores.
       fetch(form.action, {
         method: "POST",
         body: data,
         credentials: "same-origin",
         redirect: "follow",
-        headers: { "X-Requested-With": "XMLHttpRequest" },
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "Accept": "text/html, text/plain, application/json"
+        },
       })
         .then((response) => {
           if (response.redirected) {
             window.location.replace(response.url);
             return null;
           }
+          const ct = response.headers.get("content-type") || "";
+          if (ct.includes("application/json")) return response.json();
           return response.text();
         })
         .then((text) => {
           if (text === null) return;
 
-          const payload = String(text || "").trim();
+          const payload = typeof text === "string" ? text.trim() : text;
 
-          // Casos OK conocidos según endpoint.
+          // Casos OK conocidos
           if (payload === "OK") {
             if (form.action.includes("process_login.php")) {
-              const target = new URL("../Vista/menu.php", window.location.href)
-                .href;
-              window.location.replace(target);
+              window.location.replace("../Vista/menu.php");
               return;
             }
             if (form.action.includes("agregar.php")) {
-              const target = new URL(
-                "../Vista/login.php?ok=1",
-                window.location.href
-              ).href;
-              window.location.replace(target);
+              window.location.replace("../Vista/login.php?ok=1");
               return;
             }
           }
 
-          // Si devuelve HTML completo, como fallback va al menú.
-          if (payload.startsWith("<!DOCTYPE") || payload.startsWith("<html")) {
-            const fallback = new URL("../Vista/menu.php", window.location.href)
-              .href;
-            window.location.replace(fallback);
+          // Si devuelve HTML completo → fallback
+          if (typeof payload === "string" && (payload.startsWith("<!DOCTYPE") || payload.startsWith("<html"))) {
+            window.location.replace("../Vista/menu.php");
             return;
           }
 
-          // Muestra el error devuelto por el backend.
-          showFormError(form, payload || "Ocurrió un error.");
+          showFormError(form, (typeof payload === "string" ? payload : payload?.error) || "Ocurrió un error.");
         })
         .catch(() => showFormError(form, "Error de conexión."));
     });
   });
 
-  // Utilidad para pintar error cerca del botón submit.
+  // ---- Componente de error accesible
   function showFormError(form, msg) {
     let errorDiv = form.querySelector(".error-message");
     if (!errorDiv) {
       errorDiv = document.createElement("div");
       errorDiv.className = "error-message";
-      const submitBtn =
-        form.querySelector('button[type="submit"]') || form.lastElementChild;
+      errorDiv.setAttribute("role", "alert");
+      errorDiv.setAttribute("aria-live", "assertive");
+      const submitBtn = form.querySelector('button[type="submit"]') || form.lastElementChild;
       form.insertBefore(errorDiv, submitBtn);
     }
     errorDiv.textContent = msg || "Error.";
   }
 
   // ================================ Juego / Overlays ================================
-  // Helper simple: muestra overlay de puntaje si existe.
+
+  // Abre overlay de puntaje si existe
   window.mostrarOverlay = function () {
     const o = document.getElementById("puntaje-overlay");
     if (o) o.style.display = "flex";
   };
 
-  // Perfil
-  // Abre el overlay de perfil y dispara la carga de datos/foto.
+  // ---- Perfil: abrir/cerrar, cargar datos/foto
   const perfilBtn = document.getElementById("perfil-btn");
   const perfilOverlay = document.getElementById("perfil-overlay");
   if (perfilBtn && perfilOverlay) {
     perfilBtn.onclick = () => {
       perfilOverlay.style.display = "flex";
-      window.cargarPerfil?.(); // usar la función global para evitar referencia no definida
+      window.cargarPerfil?.();
     };
-    // Asegura que inicie oculto.
-    perfilOverlay.style.display = "none";
+    perfilOverlay.style.display = "none"; // inicia oculto
   }
-
-  // Cierra el overlay de perfil.
   window.cerrarPerfilOverlay = function () {
     if (perfilOverlay) perfilOverlay.style.display = "none";
   };
 
-  // Carga datos del usuario (nombre/email) y foto; actualiza el modal y el ícono del botón.
+  // Cargar datos perfil
   function cargarPerfil() {
     fetch("../Controlador/get_user.php?ts=" + Date.now(), {
       credentials: "same-origin",
@@ -191,16 +204,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const perfilNombre = document.getElementById("perfil-username");
         if (perfilNombre) perfilNombre.textContent = nombre;
 
-        // Muestra email si viene del backend.
         const perfilEmail = document.getElementById("perfil-email");
         if (perfilEmail) {
           perfilEmail.textContent = data?.email ?? "";
           if (!data?.email) perfilEmail.textContent = "";
         }
 
-        // Si hay foto, la aplica con “cache-bust” para evitar caché.
+        // Actualiza foto con cache-bust
         if (data?.foto) {
-          const bust = "?" + Date.now(); // cache-bust al cargar también
+          const bust = "?" + Date.now();
           const foto1 = document.getElementById("perfil-foto");
           const foto2 = document.querySelector(".perfil-icon-img");
           if (foto1) {
@@ -213,52 +225,35 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       })
-      .catch((err) => {
-        console.error("No se pudo cargar el perfil:", err);
-      });
+      .catch((err) => console.error("No se pudo cargar el perfil:", err));
   }
-
-  // Expone cargarPerfil globalmente y la ejecuta al cargar para reflejar la foto en el botón.
   window.cargarPerfil = cargarPerfil;
-  cargarPerfil();
+  cargarPerfil(); // refleja foto en botón al cargar
 
-  // Cambiar foto (sube al servidor y refresca imágenes)
-  // Referencias a elementos del formulario de foto de perfil.
+  // ---- Cambiar foto (subir al servidor)
   const fotoForm = document.getElementById("perfil-foto-form");
   const fotoInput = document.getElementById("foto-input");
   const perfilFotoBtn = document.querySelector(".perfil-foto-btn");
-  const fotoErrorEl = document.getElementById("perfil-foto-error"); // opcional en HTML
+  const fotoErrorEl = document.getElementById("perfil-foto-error");
 
-  // Helper para mostrar errores de la sección de foto.
   function setFotoError(msg) {
     if (fotoErrorEl) fotoErrorEl.textContent = msg || "";
     else if (msg) alert(msg);
   }
 
   if (fotoForm && fotoInput) {
-    // Validación rápida del archivo y auto-submit al elegir imagen.
+    // Validar y autoinvocar submit
     fotoInput.addEventListener("change", () => {
       setFotoError("");
       const file = fotoInput.files && fotoInput.files[0];
       if (!file) return;
-      const allowed = [
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-        "image/gif",
-        "image/avif",
-      ];
-      if (!allowed.includes(file.type))
-        return setFotoError("Formatos permitidos: PNG, JPEG, JPG, WebP, AVIF.");
-      if (file.size > 3 * 1024 * 1024)
-        return setFotoError("La imagen no debe superar 3MB.");
-      // Auto submit del form.
-      if (typeof fotoForm.requestSubmit === "function")
-        fotoForm.requestSubmit();
+      const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif"];
+      if (!allowed.includes(file.type)) return setFotoError("Formatos permitidos: PNG, JPEG, JPG, WebP, AVIF.");
+      if (file.size > 3 * 1024 * 1024) return setFotoError("La imagen no debe superar 3MB.");
+      if (typeof fotoForm.requestSubmit === "function") fotoForm.requestSubmit();
       else fotoForm.dispatchEvent(new Event("submit", { cancelable: true }));
     });
 
-    // Submit del formulario: hace POST al backend, y si OK actualiza imágenes (modal y botón).
     fotoForm.addEventListener("submit", (e) => {
       e.preventDefault();
       setFotoError("");
@@ -287,7 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
             perfilFotoBtn.textContent = origText;
           }
           if (txt && txt.startsWith("../img/")) {
-            // Actualiza ambas imágenes y limpia errores/archivo seleccionado.
             const bust = "?" + Date.now();
             const pf = document.getElementById("perfil-foto");
             const pi = document.querySelector(".perfil-icon-img");
@@ -309,8 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Opciones overlay
-  // Abre/cierra el overlay de Opciones (centra y muestra el modal).
+  // ---- Overlay de Opciones
   const opcionesBtn = document.getElementById("opciones-btn");
   const opcionesOverlay = document.getElementById("opciones-overlay");
   if (opcionesBtn && opcionesOverlay) {
@@ -320,8 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  // Sonido y música
-  // Helpers que actualizan valores visibles y el volumen real del audio de fondo.
+  // ---- Sonido/Música UI
   window.actualizarSonido = function (val) {
     const el = document.getElementById("sonido-valor");
     if (el) el.textContent = val;
@@ -333,106 +325,33 @@ document.addEventListener("DOMContentLoaded", () => {
     if (audio) audio.volume = val / 100;
   };
 
-  // Inicializa el volumen del audio y fuerza el play tras primera interacción (autoplay policy).
   const musicaRange = document.getElementById("musica-range");
   const audio = document.getElementById("bg-music");
   if (audio && musicaRange) {
     audio.volume = musicaRange.value / 100;
     audio.muted = false;
-    document.body.addEventListener(
-      "click",
-      () => {
-        audio.play().catch(() => {});
-        audio.muted = false;
-      },
-      { once: true }
-    );
+    // El autoplay se maneja en el IIFE de persistencia
   }
 
-  // ================================ Drag & Drop seguro (juego) ================================
-  // Habilita arrastrar dinos desde la mesa a casillas del tablero (interacción simple).
-  const tablero = document.getElementById("tablero-casillas");
-  if (tablero) tablero.style.pointerEvents = "auto";
-
-  // Hace arrastrables los dinos de la mesa (fuente).
-  document.querySelectorAll(".dino-table .dino").forEach((dino) => {
-    dino.addEventListener("dragstart", (e) => {
-      e.dataTransfer.setData(
-        "text/dino-type",
-        dino.getAttribute("data-dino") || ""
-      );
-      e.dataTransfer.setData("text/dino-char", dino.textContent || "");
-    });
-  });
-
-  // Permite soltar un dino en una casilla si está libre y marca visualmente dragover.
-  document.querySelectorAll(".casilla").forEach((casilla) => {
-    casilla.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      casilla.classList.add("over");
-    });
-    casilla.addEventListener("dragleave", () => {
-      casilla.classList.remove("over");
-    });
-    casilla.addEventListener("drop", (e) => {
-      e.preventDefault();
-      casilla.classList.remove("over");
-
-      if (casilla.querySelector(".dino")) return;
-
-      const tipo = e.dataTransfer.getData("text/dino-type");
-      const char = e.dataTransfer.getData("text/dino-char") || "🦖";
-
-      const d = document.createElement("div");
-      d.className = "dino";
-      d.setAttribute("data-dino", tipo);
-      d.setAttribute("draggable", "false");
-      d.textContent = char;
-      casilla.appendChild(d);
-
-      // Atenúa el dino de la mesa correspondiente como “usado”.
-      if (tipo) {
-        const mesaDino = document.querySelector(
-          `.dino-table .dino[data-dino="${tipo}"]`
-        );
-        if (mesaDino) mesaDino.style.opacity = 0.3;
-      }
-    });
-  });
-
-  // ============= MANEJADOR DEL MODO OSCURO =============
-  // Alterna el fondo, persiste en localStorage y notifica al backend.
+  // ---- Toggle de Modo Oscuro (+ persistencia + notificar backend)
   document.getElementById("darkMode")?.addEventListener("change", function (e) {
-    const isDarkMode = e.target.checked;
-
-    if (isDarkMode) {
-      document.documentElement.style.setProperty(
-        "--bg-image",
-        'url("../img/fondoOscuro.png")'
-      );
-    } else {
-      document.documentElement.style.setProperty(
-        "--bg-image",
-        'url("../img/fondo.png")'
-      );
-    }
-
-    // Persistir preferencia del tema.
-    localStorage.setItem("darkMode", isDarkMode);
-
-    // Aviso al backend (opcional).
+    const isDarkModeNow = e.target.checked;
+    document.documentElement.style.setProperty(
+      "--bg-image",
+      isDarkModeNow ? 'url("../img/fondoOscuro.png")' : 'url("../img/fondo.png")'
+    );
+    localStorage.setItem("darkMode", isDarkModeNow);
     fetch("../Controlador/save_theme.php", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `darkMode=${isDarkMode ? 1 : 0}`,
-    });
+      body: `darkMode=${isDarkModeNow ? 1 : 0}`,
+    }).catch(() => {});
   });
 });
 
-// ----------------------------
-//   Background audio persistence
-// ----------------------------
-// IIFE: guarda/restaura tiempo, volumen y pausa del audio de fondo; sincroniza entre pestañas.
+// ================================
+// 🎵 AUDIO DE FONDO PERSISTENTE (IIFE)
+// ================================
 (function () {
   const TIME_KEY = "bg_audio_time";
   const VOLUME_KEY = "bg_audio_volume";
@@ -443,14 +362,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const audio = document.getElementById("bg-music");
     if (!audio) return;
 
-    // Restaura volumen.
+    // Restaurar volumen
     const storedVol = localStorage.getItem(VOLUME_KEY);
     if (storedVol !== null) {
       const v = parseFloat(storedVol);
       if (!Number.isNaN(v)) audio.volume = Math.max(0, Math.min(1, v));
     }
 
-    // Restaura estado de pausa y tiempo.
+    // Restaurar pausa y tiempo
     const storedPaused = localStorage.getItem(PAUSED_KEY) === "1";
     const storedTime = parseFloat(localStorage.getItem(TIME_KEY)) || 0;
 
@@ -460,82 +379,35 @@ document.addEventListener("DOMContentLoaded", () => {
           audio.currentTime = storedTime;
         }
       } catch {}
-      if (!storedPaused) {
-        audio.play().catch(() => {});
-      } else {
-        audio.pause();
-      }
+      if (!storedPaused) audio.play().catch(() => {});
+      else audio.pause();
     }
 
-    // Aplica restauración cuando el metadata esté listo.
     if (audio.readyState >= 1) applyTime();
     else audio.addEventListener("loadedmetadata", applyTime, { once: true });
 
-    // Guarda el tiempo de reproducción periódicamente.
+    // Guardar tiempo periódicamente
     let lastSaved = 0;
     audio.addEventListener("timeupdate", () => {
       const now = Date.now();
       if (now - lastSaved > SAVE_INTERVAL) {
-        try {
-          localStorage.setItem(
-            TIME_KEY,
-            String(Math.floor(audio.currentTime * 100) / 100)
-          );
-        } catch {}
+        localStorage.setItem(TIME_KEY, String(Math.floor(audio.currentTime * 100) / 100));
         lastSaved = now;
       }
     });
 
-    // Guarda tiempo al salir de la página.
     window.addEventListener("beforeunload", () => {
-      try {
-        localStorage.setItem(
-          TIME_KEY,
-          String(Math.floor(audio.currentTime * 100) / 100)
-        );
-      } catch {}
+      localStorage.setItem(TIME_KEY, String(Math.floor(audio.currentTime * 100) / 100));
     });
 
-    // Persiste cambios de volumen/pausa.
+    // Persistir volumen y pausa
     audio.addEventListener("volumechange", () => {
-      try {
-        localStorage.setItem(VOLUME_KEY, String(audio.volume));
-      } catch {}
+      localStorage.setItem(VOLUME_KEY, String(audio.volume));
     });
+    audio.addEventListener("play", () => localStorage.setItem(PAUSED_KEY, "0"));
+    audio.addEventListener("pause", () => localStorage.setItem(PAUSED_KEY, "1"));
 
-    audio.addEventListener("play", () => {
-      try {
-        localStorage.setItem(PAUSED_KEY, "0");
-      } catch {}
-    });
-    audio.addEventListener("pause", () => {
-      try {
-        localStorage.setItem(PAUSED_KEY, "1");
-      } catch {}
-    });
-
-    // Sincroniza estado entre pestañas con el evento storage.
-    window.addEventListener("storage", (e) => {
-      if (!e.key) return;
-      if (e.key === VOLUME_KEY && e.newValue !== null) {
-        const v = parseFloat(e.newValue);
-        if (!Number.isNaN(v)) audio.volume = Math.max(0, Math.min(1, v));
-      }
-      if (e.key === TIME_KEY && e.newValue !== null) {
-        const t = parseFloat(e.newValue);
-        if (!Number.isNaN(t)) {
-          try {
-            audio.currentTime = t;
-          } catch {}
-        }
-      }
-      if (e.key === PAUSED_KEY && e.newValue !== null) {
-        if (e.newValue === "1") audio.pause();
-        else audio.play().catch(() => {});
-      }
-    });
-
-    // Primer click del usuario: intenta reproducir si no está marcado como pausado.
+    // Autoplay tras primer interacción
     document.addEventListener(
       "click",
       () => {
@@ -550,192 +422,103 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("DOMContentLoaded", initBackgroundAudio);
 })();
 
-// ===== Código añadido: abrir/cerrar overlay "buscar código", toggle contraseña y submit =====
-// Maneja el overlay para ingresar un código, el toggle de visibilidad del input y la redirección.
-document.addEventListener("DOMContentLoaded", () => {
-  const buscarBtn = document.getElementById("buscar-codigo-btn");
-  const codigoOverlay = document.getElementById("codigo-overlay");
-  const cerrarBtn = document.querySelector(".close-codigo");
-  const codigoForm = document.getElementById("codigo-form");
-  const codigoInput = document.getElementById("codigo-input");
-  const toggleBtn = document.getElementById("toggle-password");
-
-  function abrirCodigoOverlay() {
-    if (codigoOverlay) {
-      codigoOverlay.style.display = "flex";
-      // Pequeño delay para enfocar el input tras mostrarse.
-      setTimeout(() => codigoInput?.focus(), 50);
-    }
-  }
-
-  // Cierra overlay de código.
-  window.cerrarCodigoOverlay = function () {
-    if (codigoOverlay) codigoOverlay.style.display = "none";
-  };
-
-  // Abre overlay al click en el botón de buscar.
-  if (buscarBtn) {
-    buscarBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      abrirCodigoOverlay();
-    });
-  }
-
-  // Cierra al click en el fondo.
-  if (codigoOverlay) {
-    codigoOverlay.addEventListener("click", (e) => {
-      if (e.target === codigoOverlay) window.cerrarCodigoOverlay();
-    });
-  }
-
-  // Cierra con el botón de cerrar.
-  if (cerrarBtn) {
-    cerrarBtn.addEventListener("click", () => window.cerrarCodigoOverlay());
-  }
-
-  // Toggle mostrar/ocultar contraseña.
-  if (toggleBtn && codigoInput) {
-    toggleBtn.addEventListener("click", () => {
-      codigoInput.type = codigoInput.type === "password" ? "text" : "password";
-      toggleBtn.setAttribute(
-        "aria-pressed",
-        String(codigoInput.type === "text")
-      );
-    });
-  }
-
-  // Enviar código: redirige a lobby.php con ?code=...
-  if (codigoForm && codigoInput) {
-    codigoForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const code = codigoInput.value.trim();
-      if (!code) return;
-      window.location.href = `lobby.php?code=${encodeURIComponent(code)}`;
-    });
-  }
-});
-
-//Modo Herramienta
-// Datos del juego (tipos y zonas), estado y funciones de render/drag-drop.
+// ================================
+// 🦕 DATOS DE ZONAS Y DINOS
+// ================================
 const DINO_TYPES = [
-  { id: 1, name: "T-Rex", img: "../img/dino1.png", points: 10 },
-  {
-    id: 2,
-    name: "Triceratops",
-    img: "../img/dino2.png",
-    points: 1,
-  },
-  {
-    id: 3,
-    name: "Velociraptor",
-    img: "../img/dino3.png",
-    points: 1,
-  },
-  {
-    id: 4,
-    name: "Brachiosaurus",
-    img: "../img/dino4.png",
-    points: 1,
-  },
-  {
-    id: 5,
-    name: "Pterodactyl",
-    img: "../img/dino5.png",
-    points: 1,
-  },
-  {
-    id: 6,
-    name: "Stegosaurus",
-    img: "../img/dino6.png",
-    points: 1,
-  },
+  { id: 1, name: "T-Rex",         img: "../img/dino1.png", points: 10 },
+  { id: 2, name: "Triceratops",   img: "../img/dino2.png", points: 1 },
+  { id: 3, name: "Velociraptor",  img: "../img/dino3.png", points: 1 },
+  { id: 4, name: "Brachiosaurus", img: "../img/dino4.png", points: 1 },
+  { id: 5, name: "Pterodactyl",   img: "../img/dino5.png", points: 1 },
+  { id: 6, name: "Stegosaurus",   img: "../img/dino6.png", points: 1 },
 ];
 
+// Zonas corregidas para coincidir con reglas
 const ZONES = [
-  {
-    id: 1,
-    name: "Bosque de la Semejanza",
-    left: "4%",
-    top: "5%",
-    width: "34%",
-    height: "23%",
-  },
-  {
-    id: 2,
-    name: "El trio fondoso",
-    left: "6%",
-    top: "37%",
-    width: "24%",
-    height: "23%",
-  },
-  {
-    id: 3,
-    name: "La pradera del amor",
-    left: "10%",
-    top: "67%",
-    width: "25%",
-    height: "27%",
-  },
-  {
-    id: 4,
-    name: "El Rey de la Selva",
-    left: "69%",
-    top: "9%",
-    width: "15%",
-    height: "13%",
-  },
-  {
-    id: 5,
-    name: "El Prado de la Diferencia",
-    left: "60%",
-    top: "40%",
-    width: "34%",
-    height: "23%",
-  },
-  {
-    id: 6,
-    name: "La Isla Solitaria",
-    left: "74%",
-    top: "67%",
-    width: "22%",
-    height: "20%",
-  },
-  {
-    id: 7,
-    name: "El Rio",
-    left: "47%",
-    top: "80%",
-    width: "21%",
-    height: "%",
-  },
+  { id: 1, name: "Bosque de la Semejanza", left: "4%",  top: "5%",  width: "34%", height: "23%" },
+  { id: 2, name: "Prado de la Diferencia", left: "60%", top: "40%", width: "34%", height: "23%" },
+  { id: 3, name: "Pradera del Amor",       left: "10%", top: "67%", width: "25%", height: "27%" },
+  { id: 4, name: "Trío Frondoso",          left: "6%",  top: "37%", width: "24%", height: "23%" },
+  { id: 5, name: "Rey de la Selva",        left: "69%", top: "9%",  width: "15%", height: "13%" },
+  { id: 6, name: "Isla Solitaria",         left: "74%", top: "67%", width: "22%", height: "20%" },
+  { id: 7, name: "El Río",                 left: "47%", top: "80%", width: "21%", height: "10%" },
 ];
 
-// Estado del tablero (dinos por zona) y drag actual.
+// Límite global por especie
+const MAX_PER_TYPE = 10;
+
+// ================================
+// 🍞 TOAST GLOBAL (accesible)
+// ================================
+function showToast(msg, timeout = 2200) {
+  let t = document.getElementById("app-toast");
+  if (!t) {
+    t = document.createElement("div");
+    t.id = "app-toast";
+    t.style.position = "fixed";
+    t.style.left = "50%";
+    t.style.bottom = "6%";
+    t.style.transform = "translateX(-50%)";
+    t.style.background = "rgba(0,0,0,0.8)";
+    t.style.color = "#fff";
+    t.style.padding = "8px 14px";
+    t.style.borderRadius = "8px";
+    t.style.zIndex = 9999;
+    t.style.fontSize = "14px";
+    t.style.boxShadow = "0 4px 12px rgba(0,0,0,0.3)";
+    t.setAttribute("role", "status");
+    t.setAttribute("aria-live", "polite");
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = "1";
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(() => {
+    t.style.opacity = "0";
+  }, timeout);
+}
+
+// ================================
+// 🧩 ESTADO DEL PARQUE Y RENDER
+// ================================
 let zones = {};
 ZONES.forEach((zone) => (zones[zone.id] = []));
 let draggedDino = null;
 let draggedFromZone = null;
 
-// Inicialización del modo herramienta: renderiza lista, inventario y zonas.
+// Inicializa la UI del modo herramienta
 function init() {
   renderDinoList();
   renderInventory();
   renderZones();
+  renderScorePanel();
 }
 
-// Renderiza la lista de dinos arrastrables (fuente).
+// Lista de dinos arrastrables (fuente)
 function renderDinoList() {
   const container = document.getElementById("dino-list");
+  if (!container) return;
   container.innerHTML = "";
 
   DINO_TYPES.forEach((dino) => {
+    const count = getTotalByType(dino.id);
     const item = document.createElement("div");
-    item.className = `dino-item ${dino.color}`;
-    item.draggable = true;
+    item.className = "dino-item";
+    item.draggable = count < MAX_PER_TYPE;
+
     item.innerHTML = `
-                    <span><img src="${dino.img}" alt="${dino.name}" class="dino-img"></span>
-                    <span class="name">${dino.name}</span>
-                `;
+      <span><img src="${dino.img}" alt="${dino.name}" class="dino-img"></span>
+      <span class="name">${dino.name}</span>
+    `;
+
+    if (!item.draggable) {
+      item.style.opacity = "0.35";
+      item.title = "Límite alcanzado (10 unidades)";
+      item.addEventListener("click", () =>
+        showToast("Límite alcanzado: ya hay 10 unidades de esta especie.")
+      );
+    }
 
     item.addEventListener("dragstart", (e) => {
       draggedDino = dino;
@@ -744,35 +527,37 @@ function renderDinoList() {
       item.style.opacity = "0.5";
     });
 
-    item.addEventListener("dragend", (e) => {
-      item.style.opacity = "1";
+    item.addEventListener("dragend", () => {
+      item.style.opacity = count < MAX_PER_TYPE ? "1" : "0.35";
     });
 
     container.appendChild(item);
   });
 }
 
-// Render del inventario: cuenta totales por tipo.
+// Inventario: totales por tipo
 function renderInventory() {
   const container = document.getElementById("inventory-grid");
+  if (!container) return;
   container.innerHTML = "";
 
   DINO_TYPES.forEach((dino) => {
     const count = getTotalByType(dino.id);
     const item = document.createElement("div");
-    item.className = `inventory-item ${dino.color}`;
+    item.className = "inventory-item";
     item.innerHTML = `
-                    <div><img src="${dino.img}" alt="${dino.name}" class="dino-img"></div>
-                    <div class="name">${dino.name}</div>
-                    <div class="count">${count}</div>
-                `;
+      <div><img src="${dino.img}" alt="${dino.name}" class="dino-img"></div>
+      <div class="name">${dino.name}</div>
+      <div class="count">${count}</div>
+    `;
     container.appendChild(item);
   });
 }
 
-// Render de zonas con eventos de drag-over/drop y contadores.
+// Contenedores de cada zona + eventos de drop
 function renderZones() {
   const container = document.getElementById("zones-container");
+  if (!container) return;
   container.innerHTML = "";
 
   ZONES.forEach((zone) => {
@@ -785,9 +570,10 @@ function renderZones() {
     zoneEl.dataset.zoneId = zone.id;
 
     zoneEl.innerHTML = `
-                    <div class="zone-label">${zone.name}</div>
-                    <div class="zone-dinos" data-zone="${zone.id}"></div>
-                `;
+      <div class="zone-label">${zone.name}</div>
+      <div class="zone-dinos" data-zone="${zone.id}"></div>
+      <div class="zone-summary" data-zone="${zone.id}"></div>
+    `;
 
     zoneEl.addEventListener("dragover", (e) => {
       e.preventDefault();
@@ -813,20 +599,17 @@ function renderZones() {
   });
 }
 
-// Renderiza los dinos dentro de una zona (con botón eliminar).
+// Dinos dentro de una zona
 function renderZoneDinos(zoneId) {
-  const container = document.querySelector(
-    `.zone-dinos[data-zone="${zoneId}"]`
-  );
+  const container = document.querySelector(`.zone-dinos[data-zone="${zoneId}"]`);
   if (!container) return;
   container.innerHTML = "";
 
   zones[zoneId].forEach((dino) => {
     const dinoEl = document.createElement("div");
-    dinoEl.className = `zone-dino ${dino.color}`;
+    dinoEl.className = "zone-dino";
     dinoEl.draggable = true;
 
-    // Solo imagen del dino.
     const imgHtml = dino.img
       ? `<img src="${dino.img}" alt="${dino.name}" class="zone-dino-img">`
       : `<div class="zone-dino-placeholder"></div>`;
@@ -836,7 +619,7 @@ function renderZoneDinos(zoneId) {
       <button class="delete-btn" aria-label="Eliminar">×</button>
     `;
 
-    // Permite re-arrastrar desde la zona actual.
+    // Re-arrastrar desde la zona
     dinoEl.addEventListener("dragstart", (e) => {
       draggedDino = dino;
       draggedFromZone = zoneId;
@@ -849,7 +632,7 @@ function renderZoneDinos(zoneId) {
       dinoEl.style.opacity = "1";
     });
 
-    // Eliminar dino de la zona.
+    // Eliminar dino de la zona
     const deleteBtn = dinoEl.querySelector(".delete-btn");
     deleteBtn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -860,14 +643,11 @@ function renderZoneDinos(zoneId) {
   });
 }
 
-// Muestra el resumen de puntaje por zona según sus reglas.
+// Resumen de puntaje por zona
 function renderZoneSummary(zoneId) {
-  const container = document.querySelector(
-    `.zone-summary[data-zone="${zoneId}"]`
-  );
+  const container = document.querySelector(`.zone-summary[data-zone="${zoneId}"]`);
   if (!container) return;
 
-  // Puntaje por zona
   const points = getZoneScore(zoneId);
 
   let extra = "";
@@ -876,78 +656,129 @@ function renderZoneSummary(zoneId) {
     if (arr.length > 0) {
       const lockedTypeId = arr[0].id;
       const d = DINO_TYPES.find((x) => x.id === lockedTypeId);
-      extra = d ? ` — Tipo fijo: ${d.emoji} ${d.name}` : "";
+      extra = d ? ` — Tipo fijo: ${d.name}` : "";
     }
   }
   container.textContent = `Puntos: ${points}${extra}`;
 }
 
-// Regla de admisión para cada zona (quién puede entrar).
+// Reglas de admisión por zona
 function canDropInZone(zoneId, dino) {
+  // Límite global por especie
+  if (getTotalByType(dino.id) >= MAX_PER_TYPE) {
+    showToast("No se puede colocar: ya hay 10 unidades de esta especie.");
+    return false;
+  }
+
+  // 1) Bosque de la Semejanza: mismo tipo que el primero + máx 6
   if (zoneId === 1) {
     const arr = zones[1];
     if (arr.length === 0) return true;
-    const lockedTypeId = arr[0].id; // todos deben ser del mismo tipo que el primero
+    if (arr.length >= 6) return false;
+    const lockedTypeId = arr[0].id;
     return dino.id === lockedTypeId;
   }
-  // Zona 4: solo 1 dino permitido
-  if (zoneId === 4) {
-    return zones[4].length === 0;
+
+  // 2) Prado de la Diferencia: solo especies distintas
+  if (zoneId === 2) {
+    const arr = zones[2] || [];
+    return !arr.some((x) => x.id === dino.id);
   }
-  // Zonas 2 y 3: sin restricción de admisión (solo puntaje cambia).
+
+  // 3) Pradera del Amor: sin restricción (parejas suman al puntaje)
+  if (zoneId === 3) return true;
+
+  // 4) Trío Frondoso: hasta 3 dinos
+  if (zoneId === 4) {
+    const currentDinos = zones[4] || [];
+    return currentDinos.length < 3;
+  }
+
+  // 5) Rey de la Selva: solo 1 dino
+  if (zoneId === 5) return (zones[5] || []).length === 0;
+
+  // 6) Isla Solitaria: solo 1 dino
+  if (zoneId === 6) return (zones[6] || []).length === 0;
+
+  // 7) El Río: sin restricción
+  if (zoneId === 7) return true;
+
   return true;
 }
 
-// Cálculo de puntaje por zona (reglas específicas).
+// Puntaje por zona
 function getZoneScore(zoneId) {
   const arr = zones[zoneId] || [];
   const n = arr.length;
 
+  // Bonus por T-Rex en el recinto (si corresponde)
+  const tBonus = arr.some((d) => d.id === 1) ? 1 : 0;
+
+  // 1) Bosque de la Semejanza
   if (zoneId === 1) {
-    // tabla: 1→2, 2→4, 3→8, 4→12, 5→18, 6→24 (y extensión suave)
     const table = { 1: 2, 2: 4, 3: 8, 4: 12, 5: 18, 6: 24 };
-    return table[n] ?? (n > 6 ? 24 + (n - 6) * 4 : 0);
+    const base = table[n] ?? (n > 6 ? 24 + (n - 6) * 4 : 0);
+    return base + tBonus;
   }
 
+  // 2) Prado de la Diferencia
   if (zoneId === 2) {
-    return Math.floor(n / 3) * 7;
+    const distinct = new Set(arr.map((d) => d.id)).size;
+    return distinct + tBonus;
   }
 
+  // 3) Pradera del Amor (5 pts por pareja)
   if (zoneId === 3) {
-    // parejas iguales: 5 puntos por pareja del mismo tipo
     let pairs = 0;
     for (const d of DINO_TYPES) {
       const c = arr.filter((x) => x.id === d.id).length;
       pairs += Math.floor(c / 2);
     }
-    return pairs * 5;
+    const base = pairs * 5;
+    return base + tBonus;
   }
 
-  // Zona 4: 7 puntos si hay exactamente 1 dino
+  // 4) Trío Frondoso (exactamente 3 → 7 pts)
   if (zoneId === 4) {
-    return n === 1 ? 7 : 0;
+    const base = n === 3 ? 7 : 0;
+    return base + tBonus;
   }
 
-  if( zoneId === 5) {
+  // 5) Rey de la Selva (1 dino; si es el recinto más poblado del parque → 7, sino 1)
+  if (zoneId === 5) {
+    if (n === 0) return 0;
+    const others = Object.entries(zones)
+      .filter(([k]) => Number(k) !== 5)
+      .map(([, a]) => a.length);
+    const strictlyMost = n > Math.max(0, ...others);
+    const base = strictlyMost ? 7 : 1;
+    return base + tBonus;
+  }
 
+  // 6) Isla Solitaria (1 dino; si es el único de su especie en todo el parque → 7)
+  if (zoneId === 6) {
+    if (n === 0) return 0;
+    const onlyDino = arr[0];
+    const totalSame = getTotalByType(onlyDino.id);
+    const base = totalSame === 1 ? 7 : 0;
+    return base + tBonus;
   }
-  if( zoneId === 6) {
 
+  // 7) El Río (1 punto por dino)
+  if (zoneId === 7) {
+    const base = n;
+    return base + tBonus;
   }
-  if( zoneId === 7) {
-    
-  }
+
   return 0;
 }
 
-// Maneja el drop: valida, mueve/crea la ficha y re-renderiza vistas relacionadas.
+// Maneja el drop (mover/crear ficha) y refresca UI
 function handleDrop(zoneId) {
   if (!draggedDino) return;
 
-  // Valida admisión según la zona.
   const canDrop = canDropInZone(zoneId, draggedDino);
   if (!canDrop) {
-    // Feedback visual rápido si no se permite.
     const z = document.querySelector(`.zone[data-zone-id="${zoneId}"]`);
     if (z && z.animate)
       z.animate(
@@ -962,7 +793,7 @@ function handleDrop(zoneId) {
     return;
   }
 
-  // Reubica o crea un nuevo dino con uniqueId.
+  // Reubicar o crear nuevo con uniqueId
   if (draggedFromZone !== null && draggedFromZone !== zoneId) {
     zones[draggedFromZone] = zones[draggedFromZone].filter(
       (d) => d.uniqueId !== draggedDino.uniqueId
@@ -973,7 +804,6 @@ function handleDrop(zoneId) {
     zones[zoneId].push(newDino);
   }
 
-  // Limpia estado de drag y actualiza UI relacionada.
   draggedDino = null;
   draggedFromZone = null;
   renderInventory();
@@ -981,7 +811,7 @@ function handleDrop(zoneId) {
   renderScorePanel();
 }
 
-// Elimina un dino por uniqueId de una zona y refresca vistas.
+// Eliminar dino por uniqueId
 function removeDinosaur(zoneId, uniqueId) {
   zones[zoneId] = zones[zoneId].filter((d) => d.uniqueId !== uniqueId);
   renderInventory();
@@ -989,25 +819,23 @@ function removeDinosaur(zoneId, uniqueId) {
   renderScorePanel();
 }
 
-// Helpers de conteo por zona o global por tipo.
+// Helpers de conteo
 function getDinoCount(zoneId, dinoId) {
   return zones[zoneId].filter((d) => d.id === dinoId).length;
 }
-
 function getTotalByType(dinoId) {
-  return Object.values(zones)
-    .flat()
-    .filter((d) => d.id === dinoId).length;
+  return Object.values(zones).flat().filter((d) => d.id === dinoId).length;
 }
 
-// Arranque del modo herramienta.
+// Arranque del modo herramienta
 init();
 
-// Overlay informativo: carrusel de slides (abrir, cerrar, navegar)
-// Muestra un carrusel con varias pantallas informativas; controles prev/next/close e indicadores.
+// ================================
+// 🧭 OVERLAY INFORMATIVO: carrusel
+// ================================
 (function () {
   const overlay = document.getElementById("tool-overlay");
-  const openOnLoad = true; // si quieres que abra al cargar
+  const openOnLoad = true; // abrir automáticamente al cargar (opcional)
   if (!overlay) return;
 
   const track = overlay.querySelector(".tool-carousel-track");
@@ -1046,35 +874,36 @@ init();
   function openOverlay() {
     overlay.classList.remove("hidden");
     overlay.style.display = "flex";
-    // Animación de entrada y foco al primer control.
-    overlay.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: "ease-out" });
+    overlay.animate([{ opacity: 0 }, { opacity: 1 }], {
+      duration: 220,
+      easing: "ease-out",
+    });
     setTimeout(() => {
-      (overlay.querySelector(".tool-slide[href], .tool-close, .tool-nav, .tool-indicator") || overlay).focus?.();
+      (
+        overlay.querySelector(".tool-close, .tool-nav, .tool-indicator") || overlay
+      ).focus?.();
     }, 200);
   }
 
   function closeOverlay() {
     overlay.classList.add("hidden");
     overlay.style.display = "none";
-    // Reinicia al primer slide al cerrar (opcional).
-    index = 0;
+    index = 0; // reinicia al primer slide (opcional)
     update();
   }
 
-  // Eventos de navegación del carrusel.
   prevBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     if (index > 0) {
       index--;
       update();
-      // Animación suave hacia la izquierda
-      track?.animate([
-        { transform: `translateX(-${(index + 1) * 100}%)`, offset: 0 },
-        { transform: `translateX(-${index * 100}%)`, offset: 1 }
-      ], {
-        duration: 350,
-        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-      });
+      track?.animate(
+        [
+          { transform: `translateX(-${(index + 1) * 100}%)`, offset: 0 },
+          { transform: `translateX(-${index * 100}%)`, offset: 1 },
+        ],
+        { duration: 350, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
+      );
     }
   });
 
@@ -1083,14 +912,13 @@ init();
     if (index < slides.length - 1) {
       index++;
       update();
-      // Animación suave hacia la derecha
-      track?.animate([
-        { transform: `translateX(-${(index - 1) * 100}%)`, offset: 0 },
-        { transform: `translateX(-${index * 100}%)`, offset: 1 }
-      ], {
-        duration: 350,
-        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-      });
+      track?.animate(
+        [
+          { transform: `translateX(-${(index - 1) * 100}%)`, offset: 0 },
+          { transform: `translateX(-${index * 100}%)`, offset: 1 },
+        ],
+        { duration: 350, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
+      );
     }
   });
 
@@ -1099,20 +927,19 @@ init();
     closeOverlay();
   });
 
-  // Botón “i” abre el overlay.
   infoBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     openOverlay();
   });
 
-  // Cierra al click fuera del modal.
+  // Cierra al hacer click fuera del modal
   overlay.addEventListener("click", (e) => {
     const modal = overlay.querySelector(".tool-modal");
     if (e.target === overlay) closeOverlay();
     if (modal && !modal.contains(e.target)) closeOverlay();
   });
 
-  // Soporte de teclado: Esc cierra, flechas navegan.
+  // Navegación por teclado
   document.addEventListener("keydown", (e) => {
     if (overlay.classList.contains("hidden")) return;
     if (e.key === "Escape") {
@@ -1120,22 +947,17 @@ init();
       closeOverlay();
       return;
     }
-    if (e.key === "ArrowLeft") {
-      if (index > 0) {
-        index--;
-        update();
-      }
+    if (e.key === "ArrowLeft" && index > 0) {
+      index--;
+      update();
     }
-    if (e.key === "ArrowRight") {
-      if (index < slides.length - 1) {
-        index++;
-        update();
-      }
+    if (e.key === "ArrowRight" && index < slides.length - 1) {
+      index++;
+      update();
     }
   });
 
-  // Inicializa ancho del track y slides; abre si openOnLoad.
-  function init() {
+  function initToolOverlay() {
     if (!track) return;
     track.style.width = `${slides.length * 100}%`;
     slides.forEach((s) => (s.style.width = `${100 / slides.length}%`));
@@ -1143,78 +965,139 @@ init();
     if (openOnLoad) openOverlay();
   }
 
-  // Expone funciones globales (si otros módulos quieren abrir/cerrar).
   window.openToolOverlay = openOverlay;
   window.closeToolOverlay = closeOverlay;
 
-  // Init en DOMContentLoaded (o de inmediato si ya cargó).
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else init();
+    document.addEventListener("DOMContentLoaded", initToolOverlay);
+  } else initToolOverlay();
 })();
 
-// Panel de puntajes: lista de puntos por zona (si existe el contenedor).
+// ================================
+// 📜 PANEL DE PUNTAJES (lista por zona + total)
+// ================================
 function renderScorePanel() {
   const ul = document.getElementById("zone-scores");
   if (!ul) return;
   ul.innerHTML = "";
+  let total = 0;
   ZONES.forEach((zone) => {
     const puntos = getZoneScore(zone.id);
+    total += puntos;
     const li = document.createElement("li");
+    li.style.fontFamily = "agbalumo, sans-serif";
+    li.style.paddingBottom = "8px";
+    li.style.textAlign = "left";
+    li.style.margin = "4px 0";
+    li.style.borderRadius = "6px";
+    li.style.transition = "background-color 0.2s";
+    li.onmouseover = () => li.style.backgroundColor = "rgba(255, 255, 255, 0.15)";
+    li.onmouseout = () => li.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
     li.textContent = `${zone.name}: ${puntos} puntos`;
     ul.appendChild(li);
   });
+  const totalLi = document.createElement("li");
+  totalLi.style.fontWeight = "bold";
+  totalLi.style.marginTop = "8px";
+  totalLi.textContent = `Total: ${total} puntos`;
+  ul.appendChild(totalLi);
 }
 
-
-// Función para el botón volver con audio
-// Reproduce un sonido “volver” y, tras un breve delay, navega atrás.
+// ================================
+// ⏮️ BOTÓN VOLVER CON AUDIO
+// ================================
 function handleBackButton() {
-  const volverAudio = document.getElementById('volver-audio');
+  const volverAudio = document.getElementById("volver-audio");
   if (volverAudio) {
-    volverAudio.currentTime = 0; // Reinicia el audio
-    volverAudio.play().then(() => {
-      setTimeout(() => {
-        window.history.back(); // Vuelve atrás después de reproducir el sonido
-      }, 200); // Pequeño delay para que se escuche el sonido
-    }).catch(err => {
-      console.log('Error reproduciendo audio:', err);
-      window.history.back(); // Si hay error, vuelve atrás de todos modos
-    });
+    volverAudio.currentTime = 0;
+    volverAudio
+      .play()
+      .then(() => {
+        setTimeout(() => {
+          window.history.back();
+        }, 200);
+      })
+      .catch(() => {
+        window.history.back();
+      });
   } else {
     window.history.back();
   }
 }
 
-// Perfil overlay
-// Bloque de compatibilidad: vuelve a registrar handlers de perfil y código si la página lo requiere.
-document.addEventListener('DOMContentLoaded', () => {
-  const perfilBtn = document.getElementById('perfil-btn');
-  const perfilOverlay = document.getElementById('perfil-overlay');
-
+// ================================
+// 👤/🔎 BLOQUE DE COMPATIBILIDAD (re-registro de handlers por si se recargan fragmentos)
+// ================================
+document.addEventListener("DOMContentLoaded", () => {
+  // Perfil
+  const perfilBtn = document.getElementById("perfil-btn");
+  const perfilOverlay = document.getElementById("perfil-overlay");
   if (perfilBtn && perfilOverlay) {
     perfilBtn.onclick = () => {
-      perfilOverlay.style.display = 'flex';
-      window.cargarPerfil?.(); // usar la función global para evitar referencia no definida
+      perfilOverlay.style.display = "flex";
+      window.cargarPerfil?.();
     };
   }
-
-  window.cerrarPerfilOverlay = function() {
-    if (perfilOverlay) perfilOverlay.style.display = 'none';
+  window.cerrarPerfilOverlay = function () {
+    if (perfilOverlay) perfilOverlay.style.display = "none";
   };
 
-  // Código overlay
-  const buscarBtn = document.getElementById('buscar-codigo-btn');
-  const codigoOverlay = document.getElementById('codigo-overlay');
+  // Overlay de código (buscar partida)
+  const buscarBtn = document.getElementById("buscar-codigo-btn");
+  const codigoOverlay = document.getElementById("codigo-overlay");
+  const cerrarBtn = document.querySelector(".close-codigo");
+  const codigoForm = document.getElementById("codigo-form");
+  const codigoInput = document.getElementById("codigo-input");
+  const toggleBtn = document.getElementById("toggle-password");
 
-  if (buscarBtn && codigoOverlay) {
-    buscarBtn.onclick = (e) => {
+  function abrirCodigoOverlay() {
+    if (codigoOverlay) {
+      codigoOverlay.style.display = "flex";
+      setTimeout(() => codigoInput?.focus(), 50);
+    }
+  }
+  window.cerrarCodigoOverlay = function () {
+    if (codigoOverlay) codigoOverlay.style.display = "none";
+  };
+
+  if (buscarBtn) {
+    buscarBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      codigoOverlay.style.display = 'flex';
-    };
+      abrirCodigoOverlay();
+    });
   }
-
-  window.cerrarCodigoOverlay = function() {
-    if (codigoOverlay) codigoOverlay.style.display = 'none';
-  };
+  if (codigoOverlay) {
+    codigoOverlay.addEventListener("click", (e) => {
+      if (e.target === codigoOverlay) window.cerrarCodigoOverlay();
+    });
+  }
+  if (cerrarBtn) {
+    cerrarBtn.addEventListener("click", () => window.cerrarCodigoOverlay());
+  }
+  if (toggleBtn && codigoInput) {
+    toggleBtn.addEventListener("click", () => {
+      codigoInput.type = codigoInput.type === "password" ? "text" : "password";
+      toggleBtn.setAttribute("aria-pressed", String(codigoInput.type === "text"));
+    });
+  }
+  if (codigoForm && codigoInput) {
+    codigoForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const code = codigoInput.value.trim();
+      if (!code) return;
+      window.location.href = `lobby.php?code=${encodeURIComponent(code)}`;
+    });
+  }
 });
+
+// ================================
+// 🗂️ CAMBIO DE TABS (utilidad simple)
+// ================================
+function switchTab(tab, ev) {
+  document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+  const clicked = ev?.currentTarget || ev?.target;
+  if (clicked) clicked.classList.add("active");
+
+  document.querySelectorAll(".tab-content").forEach((c) => c.classList.remove("active"));
+  document.getElementById(tab).classList.add("active");
+}

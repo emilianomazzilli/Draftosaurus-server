@@ -22,6 +22,10 @@ if (session_status() === PHP_SESSION_NONE) {
   <div class="borde bottom"></div>
   <div class="borde left"></div>
   <div class="borde right"></div>
+  
+  <!-- Hojas cayendo -->
+  <div class="leaves" id="leaves"></div>
+  
   <div class="container menu">
     <!-- Botón de perfil -->
      
@@ -44,7 +48,7 @@ if (session_status() === PHP_SESSION_NONE) {
       <a href="searchgame.php" class="btn menu-btn"><?= t('menu.find') ?></a>
       <a href="creategame.php" class="btn menu-btn"><?= t('menu.create') ?></a>
       <a href="tool.php" class="btn menu-btn"><?= t('menu.tools') ?></a>
-      <a href="../clasificacionmejorada.html" class="btn menu-btn"><?= t('menu.howto') ?></a>
+      <a href="leaderboard.php" class="btn menu-btn"><?= t('menu.howto') ?></a>
       <a href="../Controlador/logout.php" class="btn menu-btn"><?= t('menu.logout') ?></a>
     </div>
 

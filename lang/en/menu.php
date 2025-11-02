@@ -1,12 +1,12 @@
 <?php
 return [
     // Las que ya usás con t()
-    'title'   => 'Menu',
+    'title'   => 'Menu - Draftosaurus',
     'profile' => 'Profile',
-    'find'    => 'Find Game',
-    'create'  => 'Create Game',
+    'find'    => 'Offline Mode',
+    'create'  => 'Multiplayer',
     'tools'   => 'Tool Mode',
-    'howto'   => 'Classifications',
+    'howto'   => 'Leaderboard',
     'logout'  => 'Log out',
 
         //Menu Opciones

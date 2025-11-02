@@ -782,7 +782,7 @@
         <!-- Tablero -->
         <div class="board-container" id="board">
             <picture class="board-bg">
-                <img class="board-img" src="img/tablero.png" alt="Tablero" decoding="async" fetchpriority="high"
+                <img class="board-img" src="../img/tablero.png" alt="Tablero" decoding="async" fetchpriority="high"
                     draggable="false" />
             </picture>
         </div>
@@ -815,7 +815,7 @@
             <div class="round-info" id="round-info">Ronda: 1</div>
             <div class="turn-info" id="turn-info">Turno: Jugador 1</div>
             <div class="dice-small" id="dice-small">
-                <img src="img/dado1.png" alt="Dado" class="dice-small-img" id="dice-small-img">
+                <img src="../img/dado1.png" alt="Dado" class="dice-small-img" id="dice-small-img">
                 <div class="dice-small-label" id="dice-label">Sin restricción</div>
             </div>
         </div>

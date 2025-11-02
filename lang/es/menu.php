@@ -1,10 +1,10 @@
 <?php
 return [
     // Las que ya usás con t()
-    'title'   => 'Menú',
+    'title'   => 'Menú - Draftosaurus',
     'profile' => 'Perfil',
-    'find'    => 'Buscar partida',
-    'create'  => 'Crear partida',
+    'find'    => 'Modo local',
+    'create'  => 'Multijugador',
     'tools'   => 'Herramientas',
     'howto'   => 'Clasificaciónes',
     'logout'  => 'Cerrar sesión',

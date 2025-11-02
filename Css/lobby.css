@@ -8,17 +8,16 @@
 
 /* Título con tabla.png */
 .title-banner {
-  background: url("../img/tabla.png") center/contain no-repeat;
   width: min(520px, 90%);
   height: 90px;
   display: grid;
   place-items: center;
   font-family: "Agbalumo", system-ui;
-  font-size: 2rem;
-  color: #3d2b12;
-  text-shadow: 0 1px 0 #fff7, 0 2px 3px rgba(0,0,0,0.15);
+  font-size: 3rem;
+  color: var(--color-secundario);
+  text-shadow: 1px 1px 2px #000, 0 0 25px var(--color-secundario), 0 0 5px #000;
   letter-spacing: 1px;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
 }
 
 /* Panel principal */
@@ -113,11 +112,16 @@
 }
 
 .btn.ready {
-  background: url("../img/tabla.png") center/100% 100% no-repeat;
-  width: 180px;
+  width: 220px;
   height: 60px;
-  font-size: 1.3rem;
-  transition: all 0.3s;
+  font-size: 1.15rem;
+  background: url(../img/tabla.png) center / 100% 100% no-repeat;
+  border: 0;
+  color: var(--color-secundario);
+  text-shadow: 1px 1px 2px #000, 0 0 25px var(--color-secundario), 0 0 5px #000;
+  font-family: "Agbalumo", system-ui;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
 .btn.ready.active {
@@ -126,9 +130,10 @@
 }
 
 .countdown {
+  color: var(--color-secundario);
+  text-shadow: 1px 1px 2px #000, 0 0 25px var(--color-secundario), 0 0 5px #000;
   font-family: "Agbalumo", system-ui;
   font-size: 2rem;
-  color: #3d2b12;
   min-width: 40px;
   text-align: center;
 }

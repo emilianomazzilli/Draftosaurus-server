@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   </head>
 
   <body>
+    <!-- Hojas cayendo -->
+  <div class="leaves" id="leaves"></div>
     <div class="borde top"></div>
     <div class="borde bottom"></div>
     <div class="borde left"></div>

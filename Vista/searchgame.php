@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title><?= t('menu.title') ?></title>
+  <title><?= t('searchgame.title') ?></title>
   <link rel="stylesheet" href="../Css/styles.css">
   <link rel="stylesheet" href="../Css/menu.css">
   <link rel="stylesheet" href="../Css/media.css">
@@ -17,6 +17,8 @@ if (session_status() === PHP_SESSION_NONE) {
 </head>
 
 <body>
+  <!-- Hojas cayendo -->
+  <div class="leaves" id="leaves"></div>
   <div class="borde top"></div>
   <div class="borde bottom"></div>
   <div class="borde left"></div>
@@ -46,7 +48,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <button type="button" class="close-codigo" onclick="cerrarCodigoOverlay()">×</button>
         
         <header class="codigo-header">
-          <h2 class="codigo-titulo">Ingresar Código</h2>
+          <h2 class="codigo-titulo"><?= t('searchgame.code') ?></h2>
         </header>
 
         <form id="codigo-form" class="codigo-form">
@@ -55,7 +57,7 @@ if (session_status() === PHP_SESSION_NONE) {
               type="text" 
               id="codigo-input" 
               name="codigo" 
-              placeholder="Ingresa el código"
+              placeholder="<?= t('searchgame.code2') ?>"
               maxlength="20"
               autocomplete="off"
               required
@@ -63,7 +65,7 @@ if (session_status() === PHP_SESSION_NONE) {
           </div>
           
           <button type="submit" class="codigo-submit-btn">
-            🔍 Buscar Partida
+            <?= t('searchgame.searchgame') ?>
           </button>
         </form>
       </div>

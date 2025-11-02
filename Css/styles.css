@@ -107,7 +107,74 @@ body {
 }
 
 /* ===================
+   Hojas volando de fondo
+   =================== */
+   /* Hojas volando de fondo */
+        .leaves {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .leaf {
+            position: absolute;
+            font-size: 30px;
+            animation: fall 15s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+/* ===================
    Layout principal
+   =================== */
+/* Hojas cayendo */
+.leaves {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.leaf {
+    position: absolute;
+    font-size: 24px;
+    animation: fall linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(120vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ===================
+/* ===================
+   Container
    =================== */
 .container {
   width: 100vw;

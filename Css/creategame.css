@@ -161,6 +161,8 @@
   padding: 20px;
   border-radius: 12px;
   border: 12px solid #b8864b;
+  background-image: url(../img/pergamino.png);
+  background-size: cover;
   box-shadow: 0 12px 30px rgba(0,0,0,0.6);
 }
 .info-modal h2 {
