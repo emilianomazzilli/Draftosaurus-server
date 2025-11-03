@@ -99,9 +99,70 @@ if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
 // Ajustar permisos (opcional)
 @chmod($targetPath, 0644);
 
-// Ruta relativa para BD y frontend
+/* ------------------ CAMBIO: usar nombre de usuario en el filename ------------------ */
+// Obtener nombre base (preferir sesión, fallback a BD o userid)
+$rawName = $_SESSION['usuario'] ?? $_SESSION['username'] ?? null;
+if (!$rawName) {
+    // Si no está en sesión, intentar leer de la BD (silencioso)
+    $stmtN = $con->prepare("SELECT usuario, email FROM usuario WHERE id = ? LIMIT 1");
+    if ($stmtN) {
+        $stmtN->bind_param('i', $userId);
+        $stmtN->execute();
+        $resN = $stmtN->get_result();
+        if ($resN && ($rN = $resN->fetch_assoc())) {
+            $rawName = $rN['usuario'] ?? $rN['email'] ?? null;
+        }
+        $stmtN->close();
+    }
+}
+
+// slugify simple y seguro
+$slug = 'user' . $userId;
+if (!empty($rawName)) {
+    $s = (string)$rawName;
+    if (function_exists('iconv')) {
+        $trans = @iconv('UTF-8', 'ASCII//TRANSLIT', $s);
+        if ($trans !== false) $s = $trans;
+    }
+    $s = preg_replace('/[^A-Za-z0-9 _-]/u', '', $s);
+    $s = strtolower($s);
+    $s = preg_replace('/[ _-]+/', '-', $s);
+    $s = trim($s, '-');
+    $s = substr($s, 0, 30);
+    if ($s !== '') $slug = $s . '_' . $userId;
+}
+
+// Nuevo nombre deseado
+$newFilename = $slug . '.' . $ext;
+$newTargetPath = $dir . $newFilename;
+
+// Si ya existe, añadir sufijo numérico para evitar colisiones
+$counter = 1;
+while (is_file($newTargetPath)) {
+    $newFilename = $slug . '_' . $counter . '.' . $ext;
+    $newTargetPath = $dir . $newFilename;
+    $counter++;
+}
+
+// Renombrar el archivo físicamente (si el rename falla, mantener el original)
+if ($newTargetPath !== $targetPath) {
+    if (!@rename($targetPath, $newTargetPath)) {
+        // no se pudo renombrar; conservar el nombre original
+        $newTargetPath = $targetPath;
+        $newFilename = basename($targetPath);
+    } else {
+        // ajustar permisos al nuevo fichero
+        @chmod($newTargetPath, 0644);
+    }
+}
+
+// Actualizar variables que usarás para BD y respuesta
+$targetPath = $newTargetPath;
+$filename = $newFilename;
 $dbPath = 'img/perfiles/' . $filename;
+
 $echoPath = '../' . $dbPath;
+/* ------------------------------------------------------------------------------- */
 
 // Actualizar BD
 $stmt = $con->prepare("UPDATE usuario SET foto = ? WHERE id = ?");
@@ -121,15 +182,17 @@ $stmt->close();
 
 // Si había foto anterior y es distinta, eliminar fichero antiguo (con comprobaciones de seguridad)
 if ($oldFoto && $oldFoto !== $dbPath) {
-    // normalizar nombre de fichero y prevenir path traversal
     $oldBasename = basename($oldFoto);
-    if ($oldBasename !== '' && preg_match('/^perfil_\d+_[0-9a-fA-F]+\\.[a-z0-9]+$/', $oldBasename)) {
+    // aceptar patrones como: perfil_12_abcd.jpg  OR  gonza_12.jpg  OR  gonza-12_1.jpg
+    if ($oldBasename !== '' && preg_match('/^[A-Za-z0-9\-]+_[0-9]+(?:_[0-9]+)?\.[A-Za-z0-9]+$/', $oldBasename)) {
         $oldFull = $dir . $oldBasename;
-        // comprobar que el archivo está efectivamente dentro del directorio esperado
         $realDir = realpath($dir);
         $realOld = realpath($oldFull);
         if ($realDir && $realOld && strpos($realOld, $realDir) === 0 && is_file($realOld)) {
-            @unlink($realOld);
+            // No borrar si por alguna razón coincide con el archivo que acabamos de subir/renombrar
+            if (realpath($targetPath) !== $realOld) {
+                @unlink($realOld);
+            }
         }
     }
 }
