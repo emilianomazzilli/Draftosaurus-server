@@ -45,8 +45,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
     <!-- Botones menú -->
     <div class="menu-botones">
-      <a href="searchgame.php" class="btn menu-btn"><?= t('menu.find') ?></a>
-      <a href="creategame.php" class="btn menu-btn"><?= t('menu.create') ?></a>
+      <a href="game.php" class="btn menu-btn"><?= t('menu.find') ?></a>
+      <a href="searchgame.php" class="btn menu-btn"><?= t('menu.create') ?></a>
       <a href="tool.php" class="btn menu-btn"><?= t('menu.tools') ?></a>
       <a href="leaderboard.php" class="btn menu-btn"><?= t('menu.howto') ?></a>
       <a href="../Controlador/logout.php" class="btn menu-btn"><?= t('menu.logout') ?></a>
